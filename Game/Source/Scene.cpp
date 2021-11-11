@@ -253,6 +253,22 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 	playerx = configRenderer.child("player").attribute("x").as_int();
 	playery = configRenderer.child("player").attribute("y").as_int();
 
+	enemy1x = configRenderer.child("enemy1").attribute("x").as_int();
+	enemy1y = configRenderer.child("enemy1").attribute("y").as_int();
+
+	enemy2x = configRenderer.child("enemy2").attribute("x").as_int();
+	enemy2y = configRenderer.child("enemy2").attribute("y").as_int();
+
+	enemy3x = configRenderer.child("enemy3").attribute("x").as_int();
+	enemy3y = configRenderer.child("enemy3").attribute("y").as_int();
+
+	enemy4x = configRenderer.child("enemy4").attribute("x").as_int();
+	enemy4y = configRenderer.child("enemy4").attribute("y").as_int();
+
+	enemy5x = configRenderer.child("enemy5").attribute("x").as_int();
+	enemy5y = configRenderer.child("enemy5").attribute("y").as_int();
+
+
 	app->render->camera.x = configRenderer.child("camera").attribute("x").as_int();
 	app->render->camera.y = configRenderer.child("camera").attribute("y").as_int();
 
@@ -262,7 +278,12 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
 	pugi::xml_node player = configRenderer.child("player");
 	pugi::xml_node camera = configRenderer.child("camera");
-
+	pugi::xml_node enemy1 = configRenderer.child("enemy1");
+	pugi::xml_node enemy2 = configRenderer.child("enemy2");
+	pugi::xml_node enemy3 = configRenderer.child("enemy3");
+	pugi::xml_node enemy4 = configRenderer.child("enemy4");
+	pugi::xml_node enemy5 = configRenderer.child("enemy5");
+	
 	player.attribute("x").set_value(playerx);
 	player.attribute("y").set_value(playery);
 

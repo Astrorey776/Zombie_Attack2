@@ -32,10 +32,27 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+	float enemy1x = 0;
+	float enemy1y = 0;
+
+	float enemy2x = 0;
+	float enemy2y = 0;
+
+	float enemy3x = 0;
+	float enemy3y = 0;
+
+	float enemy4x = 0;
+	float enemy4y = 0;
+
+	float enemy5x = 0;
+	float enemy5y = 0;
+
 	float playerx = 100.0;
 	float playery = 510.0;
+
 	float velx = 10;
 	float vely = 200;
+
 	float gravity = -0.5;
 	float initial_y1;
 	bool jumping;

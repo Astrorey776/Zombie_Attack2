@@ -120,6 +120,7 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+	//OPTICK_EVENT();
 	bool ret = true;
 	PrepareUpdate();
 
@@ -171,11 +172,14 @@ pugi::xml_node App::LoadGame_Data(pugi::xml_document& configSaveGame)const {
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	//OPTICK_EVENT();
 }
 
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+	//OPTICK_EVENT();
+	// 
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
@@ -184,6 +188,8 @@ void App::FinishUpdate()
 // Call modules before each loop iteration
 bool App::PreUpdate()
 {
+	//OPTICK_EVENT();
+
 	bool ret = true;
 
 	ListItem<Module*>* item;
@@ -206,6 +212,8 @@ bool App::PreUpdate()
 // Call modules on each loop iteration
 bool App::DoUpdate()
 {
+	//OPTICK_EVENT();
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -228,6 +236,8 @@ bool App::DoUpdate()
 // Call modules after each loop iteration
 bool App::PostUpdate()
 {
+	//OPTICK_EVENT();
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	Module* pModule = NULL;

@@ -80,6 +80,9 @@ int main(int argc, char* args[])
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
+
+				//OPTICK_FRAME("Main Loop")
+
 			if(app->Update() == false)
 				state = CLEAN;
 			break;

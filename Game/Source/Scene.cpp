@@ -122,6 +122,7 @@ bool Scene::Update(float dt)
 
 	// Draw map
 	app->map->Draw();
+	SDL_Rect* playeran = new SDL_Rect();
 	SDL_Rect *left1 = new SDL_Rect();
 	left1->x = 0;
 	left1->y = 0;
@@ -153,6 +154,8 @@ bool Scene::Update(float dt)
 	right3->w = 46;
 	right3->h = 56;
 
+	
+
 	if (app->render->camera.x > 0) {
 		app->render->camera.x = -2;
 
@@ -170,16 +173,31 @@ bool Scene::Update(float dt)
 		dreta.PushBack({235,2,46,56});
 		dreta.loop = true;
 		dreta.speed = 2;*/
-		app->render->DrawTexture(img, playerx, playery, right1);
+
+		playeran->x = right1->x;
+		playeran->y = right1->y;
+		playeran->w = right1->w;
+		playeran->h = right1->h;
+
+
+		app->render->DrawTexture(img, playerx, playery, playeran);
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >=1) {
 		playerx -= velx;
-		app->render->DrawTexture(img, playerx, playery, left3);
+		playeran->x = left3->x;
+		playeran->y = left3->y;
+		playeran->w = left3->w;
+		playeran->h = left3->h;
+		app->render->DrawTexture(img, playerx, playery, playeran);
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == NULL && app->input->GetKey(SDL_SCANCODE_D) == NULL){
-		app->render->DrawTexture(img, playerx, playery, right3);
+		playeran->x = right3->x;
+		playeran->y = right3->y;
+		playeran->w = right3->w;
+		playeran->h = right3->h;
+		app->render->DrawTexture(img, playerx, playery, playeran);
 	}
 
 	

@@ -84,13 +84,17 @@ void Map::Draw()
 				}
 			}
 		}
-		if (mapLayerItem->data->properties.GetProperty("Draw") == 0 && app->scene->Show_colliders == 1) {
+		if (mapLayerItem->data->properties.GetProperty("Draw") == 0 && app->scene->Show_colliders == 0) {
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{
 				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
 					// L04: DONE 9: Complete the draw function
 					int gid = mapLayerItem->data->Get(x, y);
+
+					/*if (app->scene->playery = y * 32 - 56) {
+						app->scene->playery = 710;
+					}*/
 
 					if (gid > 0) {
 
@@ -106,15 +110,22 @@ void Map::Draw()
 							pos.x,
 							pos.y,
 							&r);
-					}
 
+						//w = 42	h = 46
+						SDL_Rect playerRect = { app->scene->playerx, app->scene->playery, 42, 52 };
+						app->render->DrawRectangle(playerRect, 0, 250, 0);
+						if ((app->scene->playerx + 42 > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
+							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32)) {
+							//Colliding 
+							app->render->DrawCircle(100, 100, 50, 250, 0, 0);
+						}
+					}
 				}
+
 			}
 		}
-
 		mapLayerItem = mapLayerItem->next;
 	}
-
 }
 
 

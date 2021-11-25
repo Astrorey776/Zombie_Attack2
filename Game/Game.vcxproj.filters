@@ -16,6 +16,7 @@
       <Filter>External\PugiXml</Filter>
     </ClCompile>
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Collisions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -52,6 +53,7 @@
     </ClInclude>
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Collisions.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

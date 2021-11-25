@@ -11,7 +11,7 @@ class Scene : public Module
 public:
 
 	Scene();
-
+	SDL_Rect* playeran = new SDL_Rect();
 	// Destructor
 	virtual ~Scene();
 

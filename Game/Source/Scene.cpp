@@ -122,7 +122,7 @@ bool Scene::Update(float dt)
 
 	// Draw map
 	app->map->Draw();
-	SDL_Rect* playeran = new SDL_Rect();
+	
 	SDL_Rect *left1 = new SDL_Rect();
 	left1->x = 0;
 	left1->y = 0;
@@ -373,5 +373,15 @@ void Scene::CalculateFPS() {
 		_fps = 60.0f;
 	}
 	
+
+}
+
+
+
+
+
+// COLLISIONS COLLISIONS
+
+void collisions() {
 
 }

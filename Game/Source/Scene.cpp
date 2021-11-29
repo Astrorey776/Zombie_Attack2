@@ -51,8 +51,6 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
-
-
 	return true;
 }
 
@@ -180,7 +178,7 @@ bool Scene::Update(float dt)
 		playeran->h = right1->h;
 
 
-		app->render->DrawTexture(img, playerx, playery, playeran);
+		app->render->DrawTexture(img, playerx-15, playery, playeran);
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >=1) {
@@ -189,7 +187,7 @@ bool Scene::Update(float dt)
 		playeran->y = left3->y;
 		playeran->w = left3->w;
 		playeran->h = left3->h;
-		app->render->DrawTexture(img, playerx, playery, playeran);
+		app->render->DrawTexture(img, playerx+2, playery, playeran);
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == NULL && app->input->GetKey(SDL_SCANCODE_D) == NULL){
@@ -223,7 +221,7 @@ bool Scene::Update(float dt)
 
 	app->win->SetTitle(title.GetString());
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		initial_screen +=1;
 	}
 

@@ -16,6 +16,8 @@
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
 
+
+
 class PathFinding : public Module
 {
 public:
@@ -58,6 +60,8 @@ private:
 	// we store the created path here
 	DynArray<iPoint> lastPath;
 };
+
+PathFinding* pathfinding;
 
 // forward declaration
 struct PathList;

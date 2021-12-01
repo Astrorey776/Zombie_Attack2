@@ -102,6 +102,7 @@ private:
 	SString title;
 	SString organization;
 
+
 	List<Module *> modules;
 
 	// L01: DONE 2: Create new variables from pugui namespace

@@ -1,5 +1,5 @@
 #include "App.h"
-#include "PathFinding.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -120,29 +120,29 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 uint PathNode::FindWalkableAdjacents(PathList& listToFill) const
 {
 	iPoint cell;
-	uint before = listToFill.list.Count();
+	uint before = listToFill.list.count();
 
 	// north
-	cell.Create(pos.x, pos.y + 1);
-	if(app->pathfinding->IsWalkable(cell))
-		listToFill.list.Add(PathNode(-1, -1, cell, this));
+	cell.create(pos.x, pos.y + 1);
+	if(pathfinding->IsWalkable(cell))
+		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	// south
-	cell.Create(pos.x, pos.y - 1);
-	if(app->pathfinding->IsWalkable(cell))
-		listToFill.list.Add(PathNode(-1, -1, cell, this));
+	cell.create(pos.x, pos.y - 1);
+	if(pathfinding->IsWalkable(cell))
+		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	// east
-	cell.Create(pos.x + 1, pos.y);
-	if(app->pathfinding->IsWalkable(cell))
-		listToFill.list.Add(PathNode(-1, -1, cell, this));
+	cell.create(pos.x + 1, pos.y);
+	if(pathfinding->IsWalkable(cell))
+		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	// west
-	cell.Create(pos.x - 1, pos.y);
-	if(app->pathfinding->IsWalkable(cell))
-		listToFill.list.Add(PathNode(-1, -1, cell, this));
+	cell.create(pos.x - 1, pos.y);
+	if(pathfinding->IsWalkable(cell))
+		listToFill.list.add(PathNode(-1, -1, cell, this));
 
-	return listToFill.list.Count();
+	return listToFill.list.count();
 }
 
 // PathNode -------------------------------------------------------------------------
@@ -180,15 +180,15 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		PathList closed;
 
 		// Add the origin tile to open
-		open.list.Add(PathNode(0, 0, origin, nullptr));
+		open.list.add(PathNode(0, 0, origin, nullptr));
 
 		// Iterate while we have tile in the open list
-		while (open.list.Count() > 0)
+		while (open.list.count() > 0)
 		{
 			// L12b: TODO 3: Move the lowest score cell from open list to the closed list
 			ListItem<PathNode>* lowest = open.GetNodeLowestScore();
-			ListItem<PathNode>* node = closed.list.Add(lowest->data);
-			open.list.Del(lowest);
+			ListItem<PathNode>* node = closed.list.add(lowest->data);
+			open.list.del(lowest);
 
 			// L12b: TODO 4: If we just added the destination, we are done!
 			if (node->data.pos == destination)
@@ -229,7 +229,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				if (adjacentInOpen == NULL)
 				{
 					item->data.CalculateF(destination);
-					open.list.Add(item->data);
+					open.list.add(item->data);
 				}
 				else
 				{

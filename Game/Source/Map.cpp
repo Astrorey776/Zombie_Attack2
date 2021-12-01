@@ -82,6 +82,7 @@ void Map::Draw()
 					}
 
 				}
+				
 			}
 		}
 		if (mapLayerItem->data->properties.GetProperty("Draw") == 0  && mapLayerItem->data->properties.GetProperty("Navigation") == 1) {
@@ -115,8 +116,6 @@ void Map::Draw()
 								&r);
 						}
 
-						
-
 						if (app->scene->playery < (y * 32) + 32 && app->scene->playery >y * 32 && app->scene->playerx+42>x*32 && app->scene->playerx <x*32+32) {
 							klk = true;
 							app->render->DrawCircle(500, 100, 50, 255, 255, 255);
@@ -130,11 +129,12 @@ void Map::Draw()
 							klk = false;
 						}
 						if ((app->scene->playerx + 32 + app->scene->velx > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
-							(app->scene->playery + 52 - 5 > (y * 32)) && (app->scene->playery - 32 < (y * 32)) && klk == false && app->scene->God_Mode == 0) {
+							((app->scene->playery + 52 - 5 > (y * 32)) && (app->scene->playery - 32 < (y * 32))||((app->scene->playery + 52 - 5 > (y-1 * 32)) && (app->scene->playery - 32 < (y-1 * 32)))) 
+							&& klk == false && app->scene->God_Mode == 0) {
 							//Colliding horitzontal
 							
 							colisionsx = true;
-							if (app->scene->playerx +10 <(x*32) +32) {// Passa de esquerra a dreta
+							if (app->scene->playerx +10 <(x*32) +32 ) {// Passa de esquerra a dreta
 								app->scene->playerx = (x * 32) - 42;
 								aux_col = app->scene->playerx;
 								app->render->DrawCircle(300, 100, 50, 255, 0, 255);
@@ -180,11 +180,10 @@ void Map::Draw()
 
 						//w = 42	h = 46
 						if ((app->scene->playerx + 42 > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
-							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32) && (colisionsy == false)) {
+							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32) && (colisionsy == false)&& app->scene->God_Mode == 0) {
 							//Colliding muerte
-							if (app->scene->God_Mode == 0) {
 								death = true;
-							}
+							
 							app->render->DrawCircle(200, 100, 50, 0, 255, 0);
 						}
 					}

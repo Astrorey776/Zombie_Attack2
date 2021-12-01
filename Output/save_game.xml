@@ -6,11 +6,11 @@
 	<audio />
 	<scene />
 	<renderer>
-<enemy1 x="0" y="0"/>
-<enemy2 x="0" y="0"/>
-<enemy3 x="0" y="0"/>
-<enemy4 x="0" y="0"/>
-<enemy5 x="0" y="0"/>
+		<enemy1 x="0" y="0" />
+		<enemy2 x="0" y="0" />
+		<enemy3 x="0" y="0" />
+		<enemy4 x="0" y="0" />
+		<enemy5 x="0" y="0" />
 		<player x="100" y="916" />
 		<camera x="-2" y="-400" />
 	</renderer>

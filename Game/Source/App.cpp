@@ -13,7 +13,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "External/Optick/include/optick.h"
+
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)

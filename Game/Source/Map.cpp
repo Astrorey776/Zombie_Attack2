@@ -123,14 +123,14 @@ void Map::Draw()
 						}
 
 						if ((app->scene->playerx + 42 > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
-							(app->scene->playery + 52 + app->scene->vely > (y * 32)) && (app->scene->playery - app->scene->vely + 48 < (y * 32))) {
+							(app->scene->playery + 52 + app->scene->vely > (y * 32)) && (app->scene->playery - app->scene->vely + 48 < (y * 32)) && app->scene->God_Mode == 0) {
 							//Colliding vertical
 							app->render->DrawCircle(100, 100, 50, 250, 0, 0);
 							colisionsy = true;
 							klk = false;
 						}
 						if ((app->scene->playerx + 32 + app->scene->velx > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
-							(app->scene->playery + 52 - 5 > (y * 32)) && (app->scene->playery - 32 < (y * 32)) && klk == false) {
+							(app->scene->playery + 52 - 5 > (y * 32)) && (app->scene->playery - 32 < (y * 32)) && klk == false && app->scene->God_Mode == 0) {
 							//Colliding horitzontal
 							
 							colisionsx = true;
@@ -181,8 +181,10 @@ void Map::Draw()
 						//w = 42	h = 46
 						if ((app->scene->playerx + 42 > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
 							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32) && (colisionsy == false)) {
-							//Colliding 
-							death = true;
+							//Colliding muerte
+							if (app->scene->God_Mode == 0) {
+								death = true;
+							}
 							app->render->DrawCircle(200, 100, 50, 0, 255, 0);
 						}
 					}

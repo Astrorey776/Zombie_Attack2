@@ -77,6 +77,7 @@ private:
 	SDL_Texture* pantalla1;
 	SDL_Texture* pantalla2;
 	SDL_Texture* pantalla0;
+	SDL_Texture* pantalla3;
 
 	float _fps;
 	float _maxFPS;

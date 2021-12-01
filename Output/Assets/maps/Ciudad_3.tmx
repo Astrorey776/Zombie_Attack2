@@ -24021,7 +24021,7 @@
  <layer id="3" name="DeathCollisions" width="300" height="40">
   <properties>
    <property name="Draw" type="int" value="0"/>
-   <property name="Navigation" type="int" value="1"/>
+   <property name="Navigation" type="int" value="2"/>
   </properties>
   <data>
    <tile/>

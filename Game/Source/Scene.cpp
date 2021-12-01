@@ -41,6 +41,7 @@ bool Scene::Start()
 	pantalla0 = app->tex->Load("Assets/textures/Logo.png");
 	pantalla1 = app->tex->Load("Assets/textures/Pantalla_inicio.png");
 	pantalla2 = app->tex->Load("Assets/textures/Pantalla_win.png");
+	pantalla3 = app->tex->Load("Assets/textures/Pantalla_muerte.png");
 	
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -58,6 +59,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {	
 
+	app->map->Draw();
 
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
@@ -75,8 +77,10 @@ bool Scene::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		playery = 800;
+		playery = 510;
 		playerx = 100;
+		playeran->y = 510;
+		playeran->x = 100;
 		app->render->camera.x = 0;
 		app->render->camera.y = -400;
 	}
@@ -109,17 +113,18 @@ bool Scene::Update(float dt)
 		}
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400) {
-		app->render->camera.x -= velx;
-		
+	if (app->map->aux_col != app->scene->playerx) {
+		app->map->colisionsx = false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false) {
+		app->render->camera.x -= velx;	
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false) {
 		app->render->camera.x += velx;
 	}
 
-	// Draw map
-	app->map->Draw();
 	
 	SDL_Rect *left1 = new SDL_Rect();
 	left1->x = 0;
@@ -189,40 +194,51 @@ bool Scene::Update(float dt)
 		playeran->h = left3->h;
 		app->render->DrawTexture(img, playerx+2, playery, playeran);
 	}
-		
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == NULL && app->input->GetKey(SDL_SCANCODE_D) == NULL){
 		playeran->x = right3->x;
 		playeran->y = right3->y;
 		playeran->w = right3->w;
 		playeran->h = right3->h;
 		app->render->DrawTexture(img, playerx, playery, playeran);
-	}
-
-	
-	playery += vely;
-	if (playery <= 910) {//gravetat sempre fins el terra	
-		vely -= gravity;
 		
 	}
-	else {
+
+	if (app->map->colisionsy == true) {//gravetat sempre fins el terra	
+		
 		vely = 0;
 		jumping = false;
 	}
+
+
+	if (app->map->colisionsy == false) {
+		vely -= gravity;
+	}
+
+
+	app->map->colisionsy = false;
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping==false && God_Mode == 0) {
+		app->map->colisionsy = false;
 		vely = -10;
 		jumping = true;
 	}
-	 // Placeholder not needed any more
-	// L03: DONE 7: Set the window title with map/tileset info
+
+	playery += vely;
+
+	// Draw map
+
+
+	// Placeholder not needed any more
+   // L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-				   app->map->mapData.width, app->map->mapData.height,
-				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
-				   app->map->mapData.tilesets.count());
+		app->map->mapData.width, app->map->mapData.height,
+		app->map->mapData.tileWidth, app->map->mapData.tileHeight,
+		app->map->mapData.tilesets.count());
 
 	app->win->SetTitle(title.GetString());
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		initial_screen +=1;
+		initial_screen += 1;
 	}
 
 	if (initial_screen == -1) {
@@ -239,10 +255,14 @@ bool Scene::Update(float dt)
 		// cambiar la imatge a la d victoria
 	}
 
+	if (app->map->death == true) {
+		app->render->DrawTexture(app->scene->pantalla3, app->scene->playerx -100, 400, NULL);
+		velx = 0;
+		vely = 0;
+	}
 	gameLoop();
 	return true;
 }
-
 // Called each loop iteration
 bool Scene::PostUpdate()
 {

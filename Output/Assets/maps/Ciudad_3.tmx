@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="300" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="300" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="1">
  <tileset firstgid="1" name="CityTileSet" tilewidth="32" tileheight="32" tilecount="156" columns="13">
   <image source="CityTileSet.png" width="416" height="384"/>
  </tileset>
@@ -7376,7 +7376,7 @@
    <tile gid="83"/>
    <tile gid="84"/>
    <tile/>
-   <tile gid="81"/>
+   <tile gid="100"/>
    <tile gid="82"/>
    <tile gid="83"/>
    <tile gid="81"/>
@@ -12010,7 +12010,7 @@
    <tile gid="28"/>
   </data>
  </layer>
- <layer id="2" name="Collisions" width="300" height="40" visible="0">
+ <layer id="2" name="Collisions" width="300" height="40">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="Navigation" type="int" value="1"/>
@@ -19384,7 +19384,7 @@
    <tile gid="38"/>
    <tile gid="38"/>
    <tile/>
-   <tile gid="38"/>
+   <tile/>
    <tile gid="38"/>
    <tile gid="38"/>
    <tile gid="38"/>
@@ -21226,7 +21226,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="38"/>
+   <tile/>
    <tile gid="38"/>
    <tile gid="38"/>
    <tile gid="38"/>
@@ -21316,40 +21316,6 @@
    <tile gid="38"/>
    <tile gid="38"/>
    <tile gid="38"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -21518,16 +21484,17 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -21535,6 +21502,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -21816,14 +21784,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -21831,6 +21802,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22112,14 +22084,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22127,6 +22102,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22408,14 +22384,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22423,6 +22402,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22704,14 +22684,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -22719,6 +22702,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23000,14 +22984,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23015,6 +23002,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23296,14 +23284,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23311,6 +23302,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23592,14 +23584,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23607,6 +23602,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23888,14 +23884,17 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -23903,6 +23902,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="38"/>
    <tile/>
    <tile/>
    <tile/>
@@ -24018,7 +24018,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="3" name="DeathCollisions" width="300" height="40" visible="0">
+ <layer id="3" name="DeathCollisions" width="300" height="40">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="Navigation" type="int" value="2"/>
@@ -33234,7 +33234,7 @@
    <tile gid="25"/>
    <tile gid="25"/>
    <tile gid="25"/>
-   <tile/>
+   <tile gid="25"/>
    <tile/>
    <tile/>
    <tile/>

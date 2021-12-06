@@ -37,6 +37,14 @@ bool Scene::Start()
 	//app->map->Load("hello.tmx");
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+
+	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+
+
 	app->map->Load("Ciudad_3.tmx");
 	pantalla0 = app->tex->Load("Assets/textures/Logo.png");
 	pantalla1 = app->tex->Load("Assets/textures/Pantalla_inicio.png");

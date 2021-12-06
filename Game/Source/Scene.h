@@ -79,6 +79,18 @@ private:
 	SDL_Texture* pantalla0;
 	SDL_Texture* pantalla3;
 
+	SDL_Texture* HelDer;
+	SDL_Texture* HelIzq;
+
+	SDL_Texture* SoldDer1;
+	SDL_Texture* SoldDer2;
+	SDL_Texture* SoldDer3;
+	SDL_Texture* SoldIzq1;
+	SDL_Texture* SoldIzq2;
+	SDL_Texture* SoldIzq3;
+
+
+
 	float _fps;
 	float _maxFPS;
 	float _frameTime;

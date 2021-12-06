@@ -38,11 +38,16 @@ bool Scene::Start()
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
-	img = app->tex->Load("Assets/textures/zombie_sprites.png");
-	img = app->tex->Load("Assets/textures/zombie_sprites.png");
-	img = app->tex->Load("Assets/textures/zombie_sprites.png");
-	img = app->tex->Load("Assets/textures/zombie_sprites.png");
-	img = app->tex->Load("Assets/textures/zombie_sprites.png");
+	HelDer = app->tex->Load("Assets/textures/HelicopDer.png");
+	HelIzq = app->tex->Load("Assets/textures/HelicopIzq.png");
+
+	SoldDer1= app->tex->Load("Assets/textures/SoldPos1Der.png");
+	SoldDer2 = app->tex->Load("Assets/textures/SoldPos2Der.png");
+	SoldDer3 = app->tex->Load("Assets/textures/SoldPos3Der.png");
+
+	SoldIzq1 = app->tex->Load("Assets/textures/SoldPos1Izq.png");
+	SoldIzq2 = app->tex->Load("Assets/textures/SoldPos2Izq.png");
+	SoldIzq3 = app->tex->Load("Assets/textures/SoldPos3Izq.png");
 
 
 	app->map->Load("Ciudad_3.tmx");

@@ -55,7 +55,10 @@ bool Scene::Start()
 	pantalla1 = app->tex->Load("Assets/textures/Pantalla_inicio.png");
 	pantalla2 = app->tex->Load("Assets/textures/Pantalla_win.png");
 	pantalla3 = app->tex->Load("Assets/textures/Pantalla_muerte.png");
-	
+
+	Personas = app->tex->Load("Assets/textures/Personas.png");
+
+	blood = app->tex->Load("Assets/Textures/sangre.png");
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -171,7 +174,27 @@ bool Scene::Update(float dt)
 	right3->w = 46;
 	right3->h = 56;
 
-	
+	SDL_Rect* people = new SDL_Rect();
+	people->x = 0;
+	people->y = 0;
+	people->w = 37;
+	people->h = 54;
+	SDL_Rect* people2 = new SDL_Rect();
+	people2->x = 0;
+	people2->y = 56;
+	people2->w = 37;
+	people2->h = 54;
+
+	SDL_Rect* sangre = new SDL_Rect();
+	sangre->x = 0;
+	sangre->y = 0;
+	sangre->w = 53;
+	sangre->h = 42;
+
+	if (people_aux == true) {
+		app->render->DrawTexture(Personas, 800, 905, people);
+	}
+
 
 	if (app->render->camera.x > 0) {
 		app->render->camera.x = -2;
@@ -182,6 +205,19 @@ bool Scene::Update(float dt)
 
 	}
 
+	//800,905,37,54
+	people_aux_int;
+	for (int i = people_aux_int; i < 4; i += 4) {
+		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3]) {
+			
+			people_aux = false;			
+			people_aux_int = i+4;
+			app->render->DrawTexture(blood, people_hitboxes[i], people_hitboxes[i + 1] + 10, sangre);
+			app->render->DrawCircle(100, 200, 50, 250, 250, 0);
+
+		}
+	}
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1) {
 		playerx += velx;
@@ -404,16 +440,5 @@ void Scene::CalculateFPS() {
 	else {
 		_fps = 60.0f;
 	}
-	
-
-}
-
-
-
-
-
-// COLLISIONS COLLISIONS
-
-void collisions() {
 
 }

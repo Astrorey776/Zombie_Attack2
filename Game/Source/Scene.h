@@ -62,6 +62,13 @@ public:
 	Animation dreta;
 	Animation esquerra;
 
+	float people_hitboxes[8] = { 800,905,37,54,
+								1000,905,37,54};
+
+	bool people_aux = true;
+	bool people_aux2 = true;
+	int people_aux_int;
+
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
@@ -89,7 +96,8 @@ private:
 	SDL_Texture* SoldIzq2;
 	SDL_Texture* SoldIzq3;
 
-
+	SDL_Texture* Personas;
+	SDL_Texture* blood;
 
 	float _fps;
 	float _maxFPS;

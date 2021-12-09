@@ -28,6 +28,16 @@ bool Scene::Awake()
 	return ret;
 }
 
+/*void Scene::DebugPath() {
+	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i) {
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i) - y);
+		app->render->DrawTexture(pathTex, pos.x, pos.y);
+	}
+}
+*/
+
+
 // Called before the first frame
 bool Scene::Start()
 {
@@ -35,6 +45,14 @@ bool Scene::Start()
 	
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
+
+	if (app->map->Load("Ciudad_3.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		RELEASE_ARRAY(data);
+	}
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
@@ -74,6 +92,7 @@ bool Scene::Update(float dt)
 
 	app->map->Draw();
 	
+	app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
 
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {

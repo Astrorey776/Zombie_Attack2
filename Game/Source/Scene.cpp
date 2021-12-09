@@ -210,8 +210,12 @@ bool Scene::Update(float dt)
 	sangre->w = 53;
 	sangre->h = 42;
 
-	if (people_aux == true) {
+	if (people_aux == true && people_aux_int ==0) {
 		app->render->DrawTexture(Personas, 800, 905, people);
+	}
+
+	if (people_aux2 == true) {
+		app->render->DrawTexture(Personas, 3000, 715, people2);
 	}
 
 
@@ -226,10 +230,15 @@ bool Scene::Update(float dt)
 
 	//800,905,37,54
 	people_aux_int;
-	for (int i = people_aux_int; i < 4; i += 4) {
+	for (int i = people_aux_int; i < 8; i += 4) {
 		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3]) {
-			
-			people_aux = false;			
+			if (i == 0) {
+				people_aux = false;
+			}
+			if (i == 4) {
+				people_aux2 = false;
+			}
+
 			people_aux_int = i+4;
 			app->render->DrawTexture(blood, people_hitboxes[i], people_hitboxes[i + 1] + 10, sangre);
 			app->render->DrawCircle(100, 200, 50, 250, 250, 0);
@@ -237,6 +246,7 @@ bool Scene::Update(float dt)
 		}
 	}
 	
+
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1) {
 		playerx += velx;

@@ -124,22 +124,22 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill) const
 
 	// north
 	cell.create(pos.x, pos.y + 1);
-	if(pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell))
 		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
-	if(pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell))
 		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if(pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell))
 		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if(pathfinding->IsWalkable(cell))
+	if(app->pathfinding->IsWalkable(cell))
 		listToFill.list.add(PathNode(-1, -1, cell, this));
 
 	return listToFill.list.count();

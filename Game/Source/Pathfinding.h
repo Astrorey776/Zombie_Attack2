@@ -61,8 +61,6 @@ private:
 	DynArray<iPoint> lastPath;
 };
 
-PathFinding* pathfinding;
-
 // forward declaration
 struct PathList;
 

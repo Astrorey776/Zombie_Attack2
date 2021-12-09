@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "List.h"
+#include "Pathfinding.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -87,6 +88,8 @@ private:
 public:
 
 	// Modules
+	PathFinding* pathfinding;
+
 	Window* win;
 	Input* input;
 	Render* render;

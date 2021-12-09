@@ -32,8 +32,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	float enemy1x = 0;
-	float enemy1y = 0;
+	float enemy1x =610;
+	float enemy1y = 905;
 
 	float enemy2x = 0;
 	float enemy2y = 0;
@@ -72,6 +72,8 @@ public:
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
+
+	void DebugPath();
 	
 	
 

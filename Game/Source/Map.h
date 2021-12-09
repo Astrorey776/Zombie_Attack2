@@ -141,6 +141,9 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	// L12b: Create walkability map for pathfinding
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+
 private:
 
 	// L03: Methods to load all required map data
@@ -163,6 +166,8 @@ public:
 
     // L03: DONE 1: Add your struct for map info
 	MapData mapData;
+
+	
 
 private:
 

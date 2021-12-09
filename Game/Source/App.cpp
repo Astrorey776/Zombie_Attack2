@@ -9,7 +9,6 @@
 #include "Animation.h"
 #include "Defs.h"
 #include "Log.h"
-
 #include <iostream>
 #include <sstream>
 

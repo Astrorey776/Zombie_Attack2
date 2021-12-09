@@ -62,11 +62,13 @@ public:
 	Animation dreta;
 	Animation esquerra;
 
-	float people_hitboxes[8] = { 800,905,37,54,
-								3000,715,37,54};
+	float people_hitboxes[12] = { 800,905,37,54,
+								3000,715,37,54,
+								5400, 490,37,54};
 
 	bool people_aux = true;
 	bool people_aux2 = true;
+	bool people_aux3 = true;
 	int people_aux_int;
 
 	bool LoadState(pugi::xml_node&);

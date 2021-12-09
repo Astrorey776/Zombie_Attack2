@@ -203,6 +203,11 @@ bool Scene::Update(float dt)
 	people2->y = 56;
 	people2->w = 37;
 	people2->h = 54;
+	SDL_Rect* people3 = new SDL_Rect();
+	people3->x = 37;
+	people3->y = 0;
+	people3->w = 37;
+	people3->h = 54;
 
 	SDL_Rect* sangre = new SDL_Rect();
 	sangre->x = 0;
@@ -217,6 +222,10 @@ bool Scene::Update(float dt)
 	if (people_aux2 == true) {
 		app->render->DrawTexture(Personas, 3000, 715, people2);
 	}
+	
+	if (people_aux3 == true) {
+		app->render->DrawTexture(Personas, 5400, 490, people3);
+	}
 
 
 	if (app->render->camera.x > 0) {
@@ -230,14 +239,18 @@ bool Scene::Update(float dt)
 
 	//800,905,37,54
 	people_aux_int;
-	for (int i = people_aux_int; i < 8; i += 4) {
-		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3]) {
+	for (int i = people_aux_int; i < 12; i += 4) {
+		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3] && app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
 			if (i == 0) {
 				people_aux = false;
 			}
 			if (i == 4) {
 				people_aux2 = false;
 			}
+			if (i == 8) {
+				people_aux3 = false;
+			}
+
 
 			people_aux_int = i+4;
 			app->render->DrawTexture(blood, people_hitboxes[i], people_hitboxes[i + 1] + 10, sangre);

@@ -187,11 +187,13 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (God_Mode == 1) {
+			
 			gravity = -0.5;
 			God_Mode = 0;
 		}
 		else if (God_Mode == 0) {
 			God_Mode = 1;
+			vely = 0;
 			gravity = 0;
 		}
 	}

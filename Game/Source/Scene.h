@@ -62,13 +62,21 @@ public:
 	Animation dreta;
 	Animation esquerra;
 
-	int killcount = 0;
+	bool killcount1 = false;
+	bool killcount2 = false;
+	bool killcount3 = false;
 	int vidas = 3;
+	bool heart = true;
+	bool heart2 = true;
 	float currentTicks_hit = 0;
+	float aux_pos;
 
 	float people_hitboxes[12] = { 800,905,37,54,
 								3000,715,37,54,
 								5400, 490,37,54};
+
+	float heart_hitboxes[8] = { 200,645,20,18,
+								5650,915,20,18};
 
 	bool people_aux = true;
 	bool people_aux2 = true;
@@ -104,8 +112,11 @@ private:
 	SDL_Texture* SoldIzq2;
 	SDL_Texture* SoldIzq3;
 	SDL_Texture* corazon;
+	SDL_Texture* corazon_2
+		;
 
 	SDL_Texture* Personas;
+	SDL_Texture* Personas_muertas;
 	SDL_Texture* blood;
 
 	float _fps;

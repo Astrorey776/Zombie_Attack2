@@ -183,8 +183,12 @@ void Map::Draw()
 							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32) && (colisionsy == false)&& app->scene->God_Mode == 0
 							&& app->scene->currentTicks_hit == 0) {
 							//Colliding muerte
-							app->scene->vely *= -(1.3);
-
+							if (app->scene->vely != 0) {
+								app->scene->vely *= -(1.1);
+							}
+							else {
+								app->scene->vely = -10;
+							}
 							app->scene->currentTicks_hit = 1;
 							app->scene->vidas -= 1;
 							//death = true;

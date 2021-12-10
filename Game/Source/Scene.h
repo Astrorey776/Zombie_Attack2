@@ -62,6 +62,10 @@ public:
 	Animation dreta;
 	Animation esquerra;
 
+	int killcount = 0;
+	int vidas = 3;
+	float currentTicks_hit = 0;
+
 	float people_hitboxes[12] = { 800,905,37,54,
 								3000,715,37,54,
 								5400, 490,37,54};
@@ -99,6 +103,7 @@ private:
 	SDL_Texture* SoldIzq1;
 	SDL_Texture* SoldIzq2;
 	SDL_Texture* SoldIzq3;
+	SDL_Texture* corazon;
 
 	SDL_Texture* Personas;
 	SDL_Texture* blood;

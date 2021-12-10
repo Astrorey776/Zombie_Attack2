@@ -42,7 +42,7 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 
-	
+
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
 
@@ -67,6 +67,7 @@ bool Scene::Start()
 	SoldIzq2 = app->tex->Load("Assets/textures/SoldPos2Izq.png");
 	SoldIzq3 = app->tex->Load("Assets/textures/SoldPos3Izq.png");
 
+	corazon = app->tex->Load("Assets/textures/corazon.png");
 
 	app->map->Load("Ciudad_3.tmx");
 	pantalla0 = app->tex->Load("Assets/textures/Logo.png");
@@ -92,10 +93,28 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {	
-
-	app->map->Draw();
 	
+	
+	app->map->Draw();
+
+	if (currentTicks_hit >= 10000) {
+		app->render->DrawCircle(100, 300, 25, 250, 100, 100);
+		//vely = 200;
+		currentTicks_hit = 0;
+	}
+
+	
+	if (currentTicks_hit >= 1) {
+		currentTicks_hit = SDL_GetTicks();
+	}
+
 	app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
+
+	for (int i = 0; i < vidas; i++) {
+		app->render->DrawTexture(corazon, playerx - 40*i, 420);
+	}
+
+
 
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
@@ -243,12 +262,15 @@ bool Scene::Update(float dt)
 		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3] && app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
 			if (i == 0) {
 				people_aux = false;
+				killcount = 1;
 			}
 			if (i == 4) {
 				people_aux2 = false;
+				killcount = 2;
 			}
 			if (i == 8) {
 				people_aux3 = false;
+				killcount = 3;
 			}
 
 
@@ -259,7 +281,17 @@ bool Scene::Update(float dt)
 		}
 	}
 	
+	if (killcount >= 3) {
+		app->render->DrawTexture(Personas, playerx + 1120, 410, people3);
+	}
 
+	if (killcount >= 1) {
+		app->render->DrawTexture(Personas, playerx+1095, 410, people);
+	}
+
+	if (killcount >= 2) {
+		app->render->DrawTexture(Personas, playerx + 1110, 430, people2);
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1) {
 		playerx += velx;
@@ -345,6 +377,10 @@ bool Scene::Update(float dt)
 		initial_screen = 0;
 		app->render->DrawTexture(pantalla2, playerx - 1200, 400, NULL);
 		// cambiar la imatge a la d victoria
+	}
+
+	if (vidas == 0) {
+		app->map->death = true;
 	}
 
 	if (app->map->death == true) {

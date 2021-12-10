@@ -180,9 +180,14 @@ void Map::Draw()
 
 						//w = 42	h = 46
 						if ((app->scene->playerx + 42 > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
-							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32) && (colisionsy == false)&& app->scene->God_Mode == 0) {
+							(app->scene->playery + 52 > (y * 32)) && (app->scene->playery < (y * 32) + 32) && (colisionsy == false)&& app->scene->God_Mode == 0
+							&& app->scene->currentTicks_hit == 0) {
 							//Colliding muerte
-								death = true;
+							app->scene->vely *= -(1.3);
+
+							app->scene->currentTicks_hit = 1;
+							app->scene->vidas -= 1;
+							//death = true;
 							
 							app->render->DrawCircle(200, 100, 50, 0, 255, 0);
 						}

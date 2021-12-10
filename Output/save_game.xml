@@ -11,7 +11,7 @@
 		<enemy3 x="0" y="0" />
 		<enemy4 x="0" y="0" />
 		<enemy5 x="0" y="0" />
-		<player x="100" y="916" />
-		<camera x="-2" y="-400" />
+		<player x="230" y="908.5" />
+		<camera x="-130" y="-400" />
 	</renderer>
 </game_state>

@@ -79,6 +79,10 @@ bool Scene::Start()
 	Personas = app->tex->Load("Assets/textures/Personas.png");
 	Personas_muertas = app->tex->Load("Assets/textures/Personas_muertas.png");
 
+	checkpoint1 = app -> tex->Load("Assets/textures/checkpoint1.png");
+	checkpoint2 = app -> tex->Load("Assets/textures/checkpoint2.png");
+
+
 	blood = app->tex->Load("Assets/Textures/sangre.png");
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -96,12 +100,36 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {	
 	app->map->Draw();
+
 	if (heart == true) {
 		app->render->DrawTexture(corazon_2, 200, 645);
 	}
 
 	if (heart2 == true) {
 		app->render->DrawTexture(corazon_2, 5650, 915);
+	}
+	if (aux_check1 == false) {
+		app->render->DrawTexture(checkpoint1, 3300, 905);
+	}	
+	if (playerx > 3300 || aux_check1 == true) {
+		aux_check1 = true;
+		app->render->DrawTexture(checkpoint2, 3300, 905);
+	}
+
+	if (playerx == 3300) {
+		//app->SaveGameRequest();
+	}
+
+	if (playerx == 6100) {
+		//app->SaveGameRequest();
+	}
+
+	if (aux_check2 == false) {
+		app->render->DrawTexture(checkpoint1, 6100, 905);
+	}	
+	if (playerx > 6100 ||aux_check2 == true) {
+		aux_check2 = true;
+		app->render->DrawTexture(checkpoint2, 6100, 905);
 	}
 
 	aux_pos = playerx;
@@ -117,10 +145,11 @@ bool Scene::Update(float dt)
 		currentTicks_hit = SDL_GetTicks();
 	}
 
-	app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
-
-	for (int i = 0; i < vidas; i++) {
-		app->render->DrawTexture(corazon, playerx -75 + 40*i, 420);
+	//app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
+	if (playerx < 8400) {
+		for (int i = 0; i < vidas; i++) {
+			app->render->DrawTexture(corazon, playerx - 75 + 40 * i, 420);
+		}
 	}
 
     // L02: DONE 3: Request Load / Save when pressing L/S
@@ -303,18 +332,20 @@ bool Scene::Update(float dt)
 			}
 		}
 	}
+	if (playerx < 8400) {
+		if (killcount3 == true) {
+			app->render->DrawTexture(Personas_muertas, playerx + 1115, 410, people3);
+		}
 
-	if (killcount3 == true) {
-		app->render->DrawTexture(Personas_muertas, playerx + 1115, 410, people3);
-	}
+		if (killcount1 == true) {
+			app->render->DrawTexture(Personas_muertas, playerx + 1090, 410, people);
+		}
 
-	if (killcount1 == true) {
-		app->render->DrawTexture(Personas_muertas, playerx+1090, 410, people);
+		if (killcount2 == true) {
+			app->render->DrawTexture(Personas_muertas, playerx + 1105, 430, people2);
+		}
 	}
-
-	if (killcount2 == true) {
-		app->render->DrawTexture(Personas_muertas, playerx + 1105, 430, people2);
-	}
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1) {
 		playerx += velx;

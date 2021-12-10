@@ -71,6 +71,9 @@ public:
 	float currentTicks_hit = 0;
 	float aux_pos;
 
+	bool aux_check1 = false;
+	bool aux_check2 = false;
+
 	float people_hitboxes[12] = { 800,905,37,54,
 								3000,715,37,54,
 								5400, 490,37,54};
@@ -118,6 +121,9 @@ private:
 	SDL_Texture* Personas;
 	SDL_Texture* Personas_muertas;
 	SDL_Texture* blood;
+
+	SDL_Texture* checkpoint1;
+	SDL_Texture* checkpoint2;
 
 	float _fps;
 	float _maxFPS;

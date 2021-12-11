@@ -110,6 +110,12 @@ void Map::Draw()
 							//w = 42	h = 46
 							SDL_Rect playerRect = { app->scene->playerx, app->scene->playery, 42, 52 };
 							app->render->DrawRectangle(playerRect, 0, 250, 0);
+							if (app->scene->enemy1_state == true) {
+								SDL_Rect enemyRect = { app->scene->enemy1x + 10, app->scene->enemy1y, 44, 64 };
+								app->render->DrawRectangle(enemyRect, 0, 250, 250);
+								SDL_Rect enemyRect_kill = { app->scene->enemy1x + 10, app->scene->enemy1y - 10, 44, 10 };
+								app->render->DrawRectangle(enemyRect_kill, 255, 0, 0);
+							}
 							app->render->DrawTexture(tileset->texture,
 								pos.x,
 								pos.y,

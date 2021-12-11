@@ -134,6 +134,8 @@ public:
 	float aux_col;
 	bool death = false;
 	
+	
+
 	bool klk;
 
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions

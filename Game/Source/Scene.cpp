@@ -66,6 +66,7 @@ bool Scene::Start()
 	SoldIzq1 = app->tex->Load("Assets/textures/SoldPos1Izq.png");
 	SoldIzq2 = app->tex->Load("Assets/textures/SoldPos2Izq.png");
 	SoldIzq3 = app->tex->Load("Assets/textures/SoldPos3Izq.png");
+	enemy_death = app->tex->Load("Assets/textures/enemy_death.png");
 
 	corazon = app->tex->Load("Assets/textures/corazon.png");
 	corazon_2 = app->tex->Load("Assets/textures/corazon_2.png");
@@ -86,7 +87,6 @@ bool Scene::Start()
 	blood = app->tex->Load("Assets/Textures/sangre.png");
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-
 	return true;
 }
 
@@ -134,10 +134,11 @@ bool Scene::Update(float dt)
 
 	aux_pos = playerx;
 
-	if (currentTicks_hit >= 10000) {
+	if (currentTicks_hit >= 5000) {
 		app->render->DrawCircle(100, 300, 25, 250, 100, 100);
 		//vely = 200;
 		currentTicks_hit = 0;
+		velx = 10;
 	}
 
 	
@@ -145,7 +146,7 @@ bool Scene::Update(float dt)
 		currentTicks_hit = SDL_GetTicks();
 	}
 
-	//app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
+	
 	if (playerx < 8400) {
 		for (int i = 0; i < vidas; i++) {
 			app->render->DrawTexture(corazon, playerx - 75 + 40 * i, 420);
@@ -272,6 +273,11 @@ bool Scene::Update(float dt)
 	sangre->w = 53;
 	sangre->h = 42;
 
+	//SDL_Rect enemyRect = {enemy1x, enemy1y, 44, 44 };
+	//SDL_Rect enemyRect_kill = {enemy1x, enemy1y-10, 44, 10 };
+
+
+	
 	if (people_aux == true && people_aux_int ==0) {
 		app->render->DrawTexture(Personas, 800, 905, people);
 	}
@@ -296,8 +302,8 @@ bool Scene::Update(float dt)
 
 	//800,905,37,54
 	people_aux_int;
-	for (int i = people_aux_int; i < 12; i += 4) {
-		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3] && app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+	for (int i = people_aux_int; i < 12; i += 4) {//colisions amb les persones que pots matar
+		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3] && app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 			if (i == 0) {
 				people_aux = false;
 				killcount1 = true;
@@ -319,7 +325,7 @@ bool Scene::Update(float dt)
 	}
 	
 	//200, 645, 20, 18
-	for (int i = 0; i < 8; i += 4) {
+	for (int i = 0; i < 8; i += 4) {//Colisions amb les vides
 		if (((playerx > heart_hitboxes[i]-20 && playerx < heart_hitboxes[i] + heart_hitboxes[i + 2]+20))
 			&& playery > heart_hitboxes[i+1]-30 && playery < heart_hitboxes[i+1] + heart_hitboxes[i+3]+30 ) {
 			app->render->DrawCircle(200, 100, 50, 250, 100, 0);
@@ -334,6 +340,51 @@ bool Scene::Update(float dt)
 			}
 		}
 	}
+	//colisions enemic terrestre
+	if (playerx + 50 > enemy1x && playerx<enemy1x + 44 && playery > enemy1y && playery < enemy1y + 64 && enemy1_state == true) {
+		app->render->DrawCircle(300, 300, 50,100, 100, 100);
+		
+		if (playerx < enemy1x) {
+			playerx -= 40;
+			app->render->camera.x += 40;
+			app->scene->vidas -= 1;
+		}
+
+		if (playerx > enemy1x) {
+			playerx += 40;
+			app->render->camera.x -= 40;
+			app->scene->vidas -= 1;
+		}
+
+		
+		app->scene->currentTicks_hit = 1;
+		
+	}
+	
+	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {//Matar enemic1
+		enemy1_state = false;
+		app->render->DrawTexture(blood, enemy1x +10, enemy1y, sangre);
+	}
+
+	if (enemy1_state == true) {//Enemy movement
+		if (enemy1x > 1572 && enemy_movement == true) {
+			app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
+			enemy1x += 3;
+		}
+		if (enemy1x >= 2175) {
+			enemy_movement = false;
+		}
+		if (enemy1x <= 2176 && enemy_movement == false) {
+			app->render->DrawTexture(SoldIzq1, enemy1x, enemy1y);
+			enemy1x -= 3;
+		}
+		if (enemy1x <= 1575) {
+			enemy_movement = true;
+		}
+	}
+	
+
+
 	if (playerx < 8400) {
 		if (killcount3 == true) {
 			app->render->DrawTexture(Personas_muertas, playerx + 1115, 410, people3);
@@ -345,6 +396,9 @@ bool Scene::Update(float dt)
 
 		if (killcount2 == true) {
 			app->render->DrawTexture(Personas_muertas, playerx + 1105, 430, people2);
+		}
+		if (enemy1_state == false) {
+			app->render->DrawTexture(enemy_death, playerx + 900, 400);
 		}
 	}
 	
@@ -444,6 +498,9 @@ bool Scene::Update(float dt)
 		velx = 0;
 		vely = 0;
 	}
+
+
+
 	gameLoop();
 	return true;
 }

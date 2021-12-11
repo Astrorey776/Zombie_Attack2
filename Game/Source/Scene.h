@@ -32,8 +32,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	float enemy1x =610;
-	float enemy1y = 905;
+	float enemy1x =1900;
+	float enemy1y = 775;
 
 	float enemy2x = 0;
 	float enemy2y = 0;
@@ -73,6 +73,9 @@ public:
 
 	bool aux_check1 = false;
 	bool aux_check2 = false;
+
+	bool enemy_movement = true;
+	bool enemy1_state = true;
 
 	float people_hitboxes[12] = { 800,905,37,54,
 								3000,715,37,54,
@@ -114,6 +117,8 @@ private:
 	SDL_Texture* SoldIzq1;
 	SDL_Texture* SoldIzq2;
 	SDL_Texture* SoldIzq3;
+	SDL_Texture* enemy_death;
+
 	SDL_Texture* corazon;
 	SDL_Texture* corazon_2
 		;

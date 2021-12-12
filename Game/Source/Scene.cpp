@@ -28,16 +28,6 @@ bool Scene::Awake()
 	return ret;
 }
 
-/*void Scene::DebugPath() {
-	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i) {
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i) - y);
-		app->render->DrawTexture(pathTex, pos.x, pos.y);
-	}
-}
-*/
-
-
 // Called before the first frame
 bool Scene::Start()
 {
@@ -117,11 +107,11 @@ bool Scene::Update(float dt)
 	}
 
 	if (playerx == 3300) {
-		//app->SaveGameRequest();
+		app->SaveGameRequest();
 	}
 
 	if (playerx == 6100) {
-		//app->SaveGameRequest();
+		app->SaveGameRequest();
 	}
 
 	if (aux_check2 == false) {
@@ -153,7 +143,7 @@ bool Scene::Update(float dt)
 		}
 	}
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
+    // L02: DONE 3: Request Load / Save when pressing F5/F6
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		app->LoadGameRequest();
 	}
@@ -553,19 +543,36 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 }
 bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
-	pugi::xml_node player = configRenderer.child("player");
-	pugi::xml_node camera = configRenderer.child("camera");
-	pugi::xml_node enemy1 = configRenderer.child("enemy1");
-	pugi::xml_node enemy2 = configRenderer.child("enemy2");
-	pugi::xml_node enemy3 = configRenderer.child("enemy3");
-	pugi::xml_node enemy4 = configRenderer.child("enemy4");
-	pugi::xml_node enemy5 = configRenderer.child("enemy5");
 	
-	player.attribute("x").set_value(playerx);
-	player.attribute("y").set_value(playery);
+		pugi::xml_node player = configRenderer.child("player");
+		pugi::xml_node camera = configRenderer.child("camera");
 
-	camera.attribute("x").set_value(app->render->camera.x);
-	camera.attribute("y").set_value(app->render->camera.y);
+		pugi::xml_node enemy1 = configRenderer.child("enemy1");
+		pugi::xml_node enemy2 = configRenderer.child("enemy2");
+		pugi::xml_node enemy3 = configRenderer.child("enemy3");
+		pugi::xml_node enemy4 = configRenderer.child("enemy4");
+		pugi::xml_node enemy5 = configRenderer.child("enemy5");
+
+		player.attribute("x").set_value(playerx);
+		player.attribute("y").set_value(playery);
+
+		enemy1.attribute("x").set_value(enemy1x);
+		enemy1.attribute("y").set_value(enemy1y);
+
+		enemy2.attribute("x").set_value(enemy2x);
+		enemy2.attribute("y").set_value(enemy2y);
+
+		enemy3.attribute("x").set_value(enemy3x);
+		enemy3.attribute("y").set_value(enemy3y);
+
+		enemy4.attribute("x").set_value(enemy4x);
+		enemy4.attribute("y").set_value(enemy4y);
+
+		enemy5.attribute("x").set_value(enemy5x);
+		enemy5.attribute("y").set_value(enemy5y);
+
+		camera.attribute("x").set_value(app->render->camera.x);
+		camera.attribute("y").set_value(app->render->camera.y);
 
 
 

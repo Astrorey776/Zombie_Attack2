@@ -54,6 +54,7 @@
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\PQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

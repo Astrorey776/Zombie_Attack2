@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include"PQueue.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -144,8 +145,17 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
-	// L12b: Create walkability map for pathfinding
-	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+	// L10: BFS Pathfinding methods
+	void ResetPath();
+	void DrawPath();
+	bool IsWalkable(int x, int y) const;
+
+	// L11: More pathfinding methods
+	int MovementCost(int x, int y) const;
+	void ComputePath(int x, int y);
+
+	// Propagation methods
+	void PropagateBFS();
 
 private:
 
@@ -176,6 +186,10 @@ private:
 
     SString folder;
     bool mapLoaded;
+
+	// L10: BFS Pathfinding variables
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
 };
 
 #endif // __MAP_H__

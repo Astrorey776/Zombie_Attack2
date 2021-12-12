@@ -44,6 +44,16 @@ Saving and loading the game works on the same session or even after closing the 
 
 The program has "FPS limiter", "Frame Counter" and the "Vsync" is on.
 
+## IMPROVEMENTS:
+
+*Melee and flying enemys
+*Health and Power Ups
+*Background
+*Collisions
+*Better gameplay terrain
+*FPS capped
+*Autosave checkpoints
+
 ## LINK TO OUR GITHUB:
 
 https://github.com/Astrorey776/Zombie_Attack

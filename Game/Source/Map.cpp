@@ -110,12 +110,23 @@ void Map::Draw()
 							//w = 42	h = 46
 							SDL_Rect playerRect = { app->scene->playerx, app->scene->playery, 42, 52 };
 							app->render->DrawRectangle(playerRect, 0, 250, 0);
+							SDL_Rect sensor = { app->scene->playerx-900, app->scene->playery-500, 1600,1000 };
+							app->render->DrawRectangle(sensor,0,200,200,1.9f);
 							if (app->scene->enemy1_state == true) {
 								SDL_Rect enemyRect = { app->scene->enemy1x + 10, app->scene->enemy1y, 44, 64 };
 								app->render->DrawRectangle(enemyRect, 0, 250, 250);
 								SDL_Rect enemyRect_kill = { app->scene->enemy1x + 10, app->scene->enemy1y - 10, 44, 10 };
 								app->render->DrawRectangle(enemyRect_kill, 255, 0, 0);
+								
 							}
+
+							if (app->scene->enemy2_state == true) {
+								SDL_Rect enemy2Rect = { app->scene->enemy2x, app->scene->enemy2y, 145, 57 };
+								app->render->DrawRectangle(enemy2Rect, 0, 250, 250);
+								SDL_Rect enemy2Rect_kill = { app->scene->enemy2x,app->scene->enemy2y + 57,145,10 };
+								app->render->DrawRectangle(enemy2Rect_kill, 255, 0, 0);
+							}
+
 							app->render->DrawTexture(tileset->texture,
 								pos.x,
 								pos.y,
@@ -151,6 +162,21 @@ void Map::Draw()
 								app->render->DrawCircle(400, 100, 50, 255, 255, 255);
 							}
 							app->render->DrawCircle(200, 100, 50, 0, 0, 255);
+
+						}
+						if ((app->scene->enemy1x + 42 > (x * 32)) && (app->scene->enemy1x < (x * 32) + 32) &&
+							(app->scene->enemy1y + 56  > (y * 32)) && (app->scene->enemy1y   < (y * 32)) ) {
+							//Colliding vertical enemic
+							app->render->DrawCircle(600, 100, 50, 250, 0, 0);
+							colisionsy_enemy = true;
+							klk_ = false;
+						}
+						else {
+							colisionsy_enemy == false;
+						}
+						if ((app->scene->enemy1x + 32  > (x * 32)) && (app->scene->enemy1x < (x * 32) + 32) &&
+							((app->scene->enemy1y + 52 - 5 > (y * 32)) && (app->scene->enemy1y - 32 < (y * 32)) || ((app->scene->enemy1y + 52 - 5 > (y - 1 * 32)) && (app->scene->enemy1y - 32 < (y - 1 * 32))))) {
+							app->scene->enemy1y -= 10;
 						}
 					}
 				}

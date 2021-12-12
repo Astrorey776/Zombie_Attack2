@@ -58,12 +58,15 @@ bool Scene::Start()
 
 	HelDer = app->tex->Load("Assets/textures/HelicopDer.png");
 	HelIzq = app->tex->Load("Assets/textures/HelicopIzq.png");
+	helicopter_death = app->tex->Load("Assets/textures/Helicopter_death.png");
 
 	SoldDer1= app->tex->Load("Assets/textures/SoldPos1Der.png");
+	SoldDer1_= app->tex->Load("Assets/textures/SoldPos1Der_.png");
 	SoldDer2 = app->tex->Load("Assets/textures/SoldPos2Der.png");
 	SoldDer3 = app->tex->Load("Assets/textures/SoldPos3Der.png");
 
 	SoldIzq1 = app->tex->Load("Assets/textures/SoldPos1Izq.png");
+	SoldIzq1_ = app->tex->Load("Assets/textures/SoldPos1Izq_.png");
 	SoldIzq2 = app->tex->Load("Assets/textures/SoldPos2Izq.png");
 	SoldIzq3 = app->tex->Load("Assets/textures/SoldPos3Izq.png");
 	enemy_death = app->tex->Load("Assets/textures/enemy_death.png");
@@ -83,8 +86,10 @@ bool Scene::Start()
 	checkpoint1 = app -> tex->Load("Assets/textures/checkpoint1.png");
 	checkpoint2 = app -> tex->Load("Assets/textures/checkpoint2.png");
 
+	bullet1 = app->tex->Load("Assets/textures/bullet1.png");
 
 	blood = app->tex->Load("Assets/Textures/sangre.png");
+	exclamacion = app->tex->Load("Assets/textures/exclamacion.png");
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	return true;
@@ -99,6 +104,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {	
+	
 	app->map->Draw();
 
 	if (heart == true) {
@@ -219,7 +225,19 @@ bool Scene::Update(float dt)
 		app->render->camera.x += velx;
 	}
 
-	
+	if (playerx + 700 >= enemy1x && activate1 == false) {
+		enemy1_state = true;
+		activate1 = true;
+	}
+
+	if (playerx + 700 >= enemy2x && activate2 == false) {
+		enemy2_state = true;
+		activate2 = true;
+	}
+	if (playerx - 900 >= enemy2x) {
+		activate2 = false;
+	}
+
 	SDL_Rect *left1 = new SDL_Rect();
 	left1->x = 0;
 	left1->y = 0;
@@ -356,34 +374,103 @@ bool Scene::Update(float dt)
 			app->scene->vidas -= 1;
 		}
 
-		
 		app->scene->currentTicks_hit = 1;
 		
 	}
+
+	
+	
 	
 	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {//Matar enemic1
 		enemy1_state = false;
 		app->render->DrawTexture(blood, enemy1x +10, enemy1y, sangre);
 	}
-
-	if (enemy1_state == true) {//Enemy movement
+	
+	enemy1y += 3;
+	if (enemy1_state == true && activate1 == true && killer_mode == false) {//Enemy1 movement
 		if (enemy1x > 1572 && enemy_movement == true) {
-			app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
+			app->render->DrawTexture(SoldDer1_, enemy1x, enemy1y);
 			enemy1x += 3;
 		}
 		if (enemy1x >= 2175) {
 			enemy_movement = false;
 		}
 		if (enemy1x <= 2176 && enemy_movement == false) {
-			app->render->DrawTexture(SoldIzq1, enemy1x, enemy1y);
+			app->render->DrawTexture(SoldIzq1_, enemy1x, enemy1y);
 			enemy1x -= 3;
 		}
 		if (enemy1x <= 1575) {
 			enemy_movement = true;
 		}
+		//enemy1y -= gravity;
+	}
+
+	if (playerx > enemy1x - 200 && killer_mode == false) {
+		killer_mode = true;
+		app->render->DrawTexture(exclamacion, enemy1x+9, enemy1y - 140);
+	}
+
+	if (killer_mode == true && enemy1_state == true) {
+		//enemy1y -= gravity;
+		app->render->DrawCircle(200, 200, 50, 70, 90, 100);
+		if (playerx > enemy1x) {
+			app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
+			enemy1x += 5;
+		}
+		if (playerx < enemy1x) {
+			app->render->DrawTexture(SoldIzq1, enemy1x, enemy1y);
+			enemy1x -= 5;
+		}
+		if (playerx == enemy1x) {
+			app->render->DrawTexture(SoldIzq1, enemy1x, enemy1y);
+		}
+
+	}
+	if (playerx + 50 > enemy2x && playerx < enemy2x + 145 && playery>enemy2y + 57 && playery < enemy2y + 67 && God_Mode == 0 && enemy2_state == true && activate2 == true && jumping == true) {
+		enemy2_state = false;
+		helicopter = true;
+	}
+	if (enemy2_state == true && activate2 == true) {//enemy2 movement
+		if (playerx > enemy2x) {
+			app->render->DrawTexture(HelDer, enemy2x, enemy2y);
+			enemy2x+=3;
+		}
+		if (playerx > enemy2x+300) {
+			app->render->DrawTexture(HelDer, enemy2x, enemy2y);
+			enemy2x+=4.2;
+		}
+		if (playerx < enemy2x) {
+			app->render->DrawTexture(HelIzq, enemy2x, enemy2y);
+			enemy2x-=3;
+		}
+		if (playery < enemy2y) {
+			enemy2y-=1.5;
+		}
+		if (playery > enemy2y) {
+			enemy2y+=3.5;
+		}
+		
+		if (playerx +50>enemy2x && playerx < enemy2x +145 && playery + 3 >enemy2y && playery < enemy2y + 57 && God_Mode == 0) {//enemy2 colisions
+			app->render->DrawCircle(300, 300, 50, 100, 100, 100);
+			app->render->DrawTexture(blood, playerx + 10, playery, sangre);
+			if (playerx < enemy2x) {
+				playerx -= 40;
+				app->render->camera.x += 40;
+				app->scene->vidas -= 1;
+			}
+
+			if (playerx > enemy2x) {
+				playerx += 40;
+				app->render->camera.x -= 40;
+				app->scene->vidas -= 1;
+			}
+
+			app->scene->currentTicks_hit = 1;
+		}
+		
+		
 	}
 	
-
 
 	if (playerx < 8400) {
 		if (killcount3 == true) {
@@ -397,8 +484,11 @@ bool Scene::Update(float dt)
 		if (killcount2 == true) {
 			app->render->DrawTexture(Personas_muertas, playerx + 1105, 430, people2);
 		}
-		if (enemy1_state == false) {
-			app->render->DrawTexture(enemy_death, playerx + 900, 400);
+		if (enemy1_state == false && activate1 == true) {
+			app->render->DrawTexture(enemy_death, playerx + 1000, 400);
+		}
+		if (helicopter == true) {
+			app->render->DrawTexture(helicopter_death, playerx + 800, 410);
 		}
 	}
 	
@@ -438,12 +528,14 @@ bool Scene::Update(float dt)
 		
 	}
 
-	if (app->map->colisionsy == true) {//gravetat sempre fins el terra	
-		
+	if (app->map->colisionsy == true) {//gravetat sempre fins el terra			
 		vely = 0;
 		jumping = false;
 	}
 
+	if (app->map->colisionsy_enemy == true) {
+		enemy1y -= 3;
+	}
 
 	if (app->map->colisionsy == false) {
 		vely -= gravity;
@@ -461,6 +553,7 @@ bool Scene::Update(float dt)
 
 	// Draw map
 
+	app->map->colisionsy_enemy = false;
 
 	// Placeholder not needed any more
    // L03: DONE 7: Set the window title with map/tileset info
@@ -486,10 +579,12 @@ bool Scene::Update(float dt)
 	if (playerx >= 9500) {
 		initial_screen = 0;
 		app->render->DrawTexture(pantalla2, playerx - 1200, 400, NULL);
+		enemy1_state = false;
+		enemy2_state = false;
 		// cambiar la imatge a la d victoria
 	}
 
-	if (vidas == 0) {
+	if (vidas <= 0 && God_Mode == 0) {
 		app->map->death = true;
 	}
 
@@ -497,6 +592,8 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(app->scene->pantalla3, app->scene->playerx -100, 400, NULL);
 		velx = 0;
 		vely = 0;
+		enemy1_state = false;
+		enemy2_state = false;
 	}
 
 
@@ -593,6 +690,10 @@ void Scene::gameLoop() {
 		SDL_Delay(1000.0f / _maxFPS - frameTicks);
 	}
 
+}
+
+void Scene::stop_and_shot() {
+	
 }
 
 void Scene::CalculateFPS() {

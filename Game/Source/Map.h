@@ -131,12 +131,15 @@ public:
 
 	bool colisionsy;
 	bool colisionsx = false;
+	bool colisionsy_enemy;
+	bool colisionsx_enemy = false;
 	float aux_col;
 	bool death = false;
 	
 	
 
 	bool klk;
+	bool klk_;
 
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;

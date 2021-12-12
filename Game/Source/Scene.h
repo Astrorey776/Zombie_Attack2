@@ -33,10 +33,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	float enemy1x =1900;
-	float enemy1y = 775;
+	float enemy1y = 755;
+	bool killer_mode = false;
 
-	float enemy2x = 0;
-	float enemy2y = 0;
+	float enemy2x = 5000;
+	float enemy2y = 700;
 
 	float enemy3x = 0;
 	float enemy3y = 0;
@@ -75,7 +76,11 @@ public:
 	bool aux_check2 = false;
 
 	bool enemy_movement = true;
-	bool enemy1_state = true;
+	bool enemy1_state = false;
+	bool enemy2_state = false;
+	bool helicopter = false;
+	bool activate1 = false;
+	bool activate2 = false;
 
 	float people_hitboxes[12] = { 800,905,37,54,
 								3000,715,37,54,
@@ -88,6 +93,10 @@ public:
 	bool people_aux2 = true;
 	bool people_aux3 = true;
 	int people_aux_int;
+	bool stop = false;
+	bool shot_state = false;
+	float shotx = enemy2x;
+	float shoty = enemy2y + 40;
 
 	bool LoadState(pugi::xml_node&);
 
@@ -100,6 +109,7 @@ public:
 private:
 
 	void CalculateFPS();
+	void stop_and_shot();
 	void gameLoop();
 
 	SDL_Texture* img;
@@ -110,11 +120,14 @@ private:
 
 	SDL_Texture* HelDer;
 	SDL_Texture* HelIzq;
+	SDL_Texture* helicopter_death;
 
 	SDL_Texture* SoldDer1;
+	SDL_Texture* SoldDer1_;
 	SDL_Texture* SoldDer2;
 	SDL_Texture* SoldDer3;
 	SDL_Texture* SoldIzq1;
+	SDL_Texture* SoldIzq1_;
 	SDL_Texture* SoldIzq2;
 	SDL_Texture* SoldIzq3;
 	SDL_Texture* enemy_death;
@@ -126,9 +139,12 @@ private:
 	SDL_Texture* Personas;
 	SDL_Texture* Personas_muertas;
 	SDL_Texture* blood;
+	SDL_Texture* exclamacion;
 
 	SDL_Texture* checkpoint1;
 	SDL_Texture* checkpoint2;
+
+	SDL_Texture* bullet1;
 
 	float _fps;
 	float _maxFPS;

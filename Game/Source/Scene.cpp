@@ -44,7 +44,7 @@ bool Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	fondo = app->tex->Load("Assets/textures/fondo1.jpg");
+	fondo = app->tex->Load("Assets/textures/fondo1.png");
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
@@ -92,7 +92,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {	
 
-	app->render->DrawTexture(fondo,100,510);
+	app->render->DrawTexture(fondo,0,405);
 
 	app->map->Draw();
 

@@ -112,6 +112,7 @@ private:
 	void stop_and_shot();
 	void gameLoop();
 
+	SDL_Texture* fondo;
 	SDL_Texture* img;
 	SDL_Texture* pantalla1;
 	SDL_Texture* pantalla2;

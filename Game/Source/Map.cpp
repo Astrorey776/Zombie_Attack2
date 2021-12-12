@@ -47,6 +47,115 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
+void Map::ResetPath()
+{
+	frontier.Clear();
+	visited.clear();
+
+	frontier.Push(iPoint(19, 4), 0);
+	visited.add(iPoint(19, 4));
+}
+
+void Map::DrawPath()
+{
+	iPoint point;
+
+	// Draw visited
+	ListItem<iPoint>* item = visited.start;
+
+	while (item)
+	{
+		point = item->data;
+		TileSet* tileset = GetTilesetFromTileId(26);
+
+		SDL_Rect rec = tileset->GetTileRect(26);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+
+		item = item->next;
+	}
+
+	// Draw frontier
+	for (uint i = 0; i < frontier.Count(); ++i)
+	{
+		point = *(frontier.Peek(i));
+		TileSet* tileset = GetTilesetFromTileId(25);
+
+		SDL_Rect rec = tileset->GetTileRect(25);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+	}
+
+}
+
+bool Map::IsWalkable(int x, int y) const
+{
+	// L10: DONE 3: return true only if x and y are within map limits
+	// and the tile is walkable (tile id 0 in the navigation layer)
+
+	bool isWalkable = false;
+	if (x >= 0 && y >= 0 && x <= mapData.width && y <= mapData.height) {
+
+		//gets the second layer
+		MapLayer* layer = mapData.layers.start->next->data;
+		int tileId = layer->Get(x, y);
+		if (tileId != 26) isWalkable = true;
+	}
+
+	isWalkable = true;
+	return isWalkable;
+}
+
+int Map::MovementCost(int x, int y) const
+{
+	int ret = -1;
+
+	if ((x >= 0) && (x < mapData.width) && (y >= 0) && (y < mapData.height))
+	{
+		int id = mapData.layers.start->next->data->Get(x, y);
+
+		if (id == 0) ret = 1;
+		else ret = -1;
+	}
+
+	return ret;
+}
+
+void Map::PropagateBFS()
+{
+	// L10: DONE 1: If frontier queue contains elements
+	// pop the last one and calculate its 4 neighbors
+	iPoint curr;
+	if (frontier.Pop(curr))
+	{
+		// L10: DONE 2: For each neighbor, if not visited, add it
+		// to the frontier queue and visited list
+		iPoint neighbors[4];
+		neighbors[0].create(curr.x + 1, curr.y + 0);
+		neighbors[1].create(curr.x + 0, curr.y + 1);
+		neighbors[2].create(curr.x - 1, curr.y + 0);
+		neighbors[3].create(curr.x + 0, curr.y - 1);
+
+		for (uint i = 0; i < 4; ++i)
+		{
+			if (MovementCost(neighbors[i].x, neighbors[i].y) > 0)
+			{
+				if (visited.find(neighbors[i]) == -1)
+				{
+					frontier.Push(neighbors[i], 0);
+					visited.add(neighbors[i]);
+
+					// L11: TODO 1: Record the direction to the previous node 
+					// with the new list "breadcrumps"
+
+				}
+			}
+		}
+	}
+}
+
 // Draw the map (all requried layers)
 void Map::Draw()
 {
@@ -585,46 +694,3 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 }
 
 
-// L12b: Create walkability map for pathfinding
-bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
-{
-	bool ret = false;
-	ListItem<MapLayer*>* item;
-	item = mapData.layers.start;
-
-	for (item = mapData.layers.start; item != NULL; item = item->next)
-	{
-		MapLayer* layer = item->data;
-
-		if (layer->properties.GetProperty("Navigation", 0) == 0)
-			continue;
-
-		uchar* map = new uchar[layer->width * layer->height];
-		memset(map, 1, layer->width * layer->height);
-
-		for (int y = 0; y < mapData.height; ++y)
-		{
-			for (int x = 0; x < mapData.width; ++x)
-			{
-				int i = (y * layer->width) + x;
-
-				int tileId = layer->Get(x, y);
-				TileSet* tileset = (tileId > 0) ? GetTilesetFromTileId(tileId) : NULL;
-
-				if (tileset != NULL)
-				{
-					map[i] = (tileId - tileset->firstgid) > 0 ? 0 : 1;
-				}
-			}
-		}
-
-		*buffer = map;
-		width = mapData.width;
-		height = mapData.height;
-		ret = true;
-
-		break;
-	}
-
-	return ret;
-}

@@ -28,16 +28,6 @@ bool Scene::Awake()
 	return ret;
 }
 
-/*void Scene::DebugPath() {
-	const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i) {
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i) - y);
-		app->render->DrawTexture(pathTex, pos.x, pos.y);
-	}
-}
-*/
-
-
 // Called before the first frame
 bool Scene::Start()
 {
@@ -53,6 +43,8 @@ bool Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+
+	fondo = app->tex->Load("Assets/textures/fondo1.png");
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
@@ -103,8 +95,10 @@ bool Scene::PreUpdate()
 
 // Called each loop iteration
 bool Scene::Update(float dt)
-{	
-	
+{
+
+	app->render->DrawTexture(fondo,0,405);
+
 	app->map->Draw();
 
 	if (heart == true) {
@@ -116,23 +110,23 @@ bool Scene::Update(float dt)
 	}
 	if (aux_check1 == false) {
 		app->render->DrawTexture(checkpoint1, 3300, 905);
-	}	
+	}
 	if (playerx > 3300 || aux_check1 == true) {
 		aux_check1 = true;
 		app->render->DrawTexture(checkpoint2, 3300, 905);
 	}
 
 	if (playerx == 3300) {
-		//app->SaveGameRequest();
+		app->SaveGameRequest();
 	}
 
 	if (playerx == 6100) {
-		//app->SaveGameRequest();
+		app->SaveGameRequest();
 	}
 
 	if (aux_check2 == false) {
 		app->render->DrawTexture(checkpoint1, 6100, 905);
-	}	
+	}
 	if (playerx > 6100 ||aux_check2 == true) {
 		aux_check2 = true;
 		app->render->DrawTexture(checkpoint2, 6100, 905);
@@ -147,26 +141,26 @@ bool Scene::Update(float dt)
 		velx = 10;
 	}
 
-	
+
 	if (currentTicks_hit >= 1) {
 		currentTicks_hit = SDL_GetTicks();
 	}
 
-	
+
 	if (playerx < 8400) {
 		for (int i = 0; i < vidas; i++) {
 			app->render->DrawTexture(corazon, playerx - 75 + 40 * i, 420);
 		}
 	}
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
+    // L02: DONE 3: Request Load / Save when pressing F5/F6
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		app->LoadGameRequest();
 	}
 	/*if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		playerx = 100.0;
 		playery = 900.0;
-		app->render->camera.x 
+		app->render->camera.x
 		app->render->camera.y = 900.0;
 	}*/
 
@@ -194,7 +188,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (God_Mode == 1) {
-			
+
 			gravity = -0.5;
 			God_Mode = 0;
 		}
@@ -212,13 +206,13 @@ bool Scene::Update(float dt)
 			playery += velx / 2;
 		}
 	}
-	
+
 	if (app->map->aux_col != app->scene->playerx) {
 		app->map->colisionsx = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false) {
-		app->render->camera.x -= velx;	
+		app->render->camera.x -= velx;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false) {
@@ -295,7 +289,7 @@ bool Scene::Update(float dt)
 	//SDL_Rect enemyRect_kill = {enemy1x, enemy1y-10, 44, 10 };
 
 
-	
+
 	if (people_aux == true && people_aux_int ==0) {
 		app->render->DrawTexture(Personas, 800, 905, people);
 	}
@@ -303,7 +297,7 @@ bool Scene::Update(float dt)
 	if (people_aux2 == true) {
 		app->render->DrawTexture(Personas, 3000, 715, people2);
 	}
-	
+
 	if (people_aux3 == true) {
 		app->render->DrawTexture(Personas, 5400, 490, people3);
 	}
@@ -341,13 +335,13 @@ bool Scene::Update(float dt)
 
 		}
 	}
-	
+
 	//200, 645, 20, 18
 	for (int i = 0; i < 8; i += 4) {//Colisions amb les vides
 		if (((playerx > heart_hitboxes[i]-20 && playerx < heart_hitboxes[i] + heart_hitboxes[i + 2]+20))
 			&& playery > heart_hitboxes[i+1]-30 && playery < heart_hitboxes[i+1] + heart_hitboxes[i+3]+30 ) {
 			app->render->DrawCircle(200, 100, 50, 250, 100, 0);
-			
+
 			if (i == 0 && heart == true) {
 				heart = false;
 				vidas += 1;
@@ -361,7 +355,7 @@ bool Scene::Update(float dt)
 	//colisions enemic terrestre
 	if (playerx + 50 > enemy1x && playerx<enemy1x + 44 && playery > enemy1y && playery < enemy1y + 64 && enemy1_state == true) {
 		app->render->DrawCircle(300, 300, 50,100, 100, 100);
-		
+
 		if (playerx < enemy1x) {
 			playerx -= 40;
 			app->render->camera.x += 40;
@@ -375,17 +369,17 @@ bool Scene::Update(float dt)
 		}
 
 		app->scene->currentTicks_hit = 1;
-		
+
 	}
 
-	
-	
-	
+
+
+
 	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {//Matar enemic1
 		enemy1_state = false;
 		app->render->DrawTexture(blood, enemy1x +10, enemy1y, sangre);
 	}
-	
+
 	enemy1y += 3;
 	if (enemy1_state == true && activate1 == true && killer_mode == false) {//Enemy1 movement
 		if (enemy1x > 1572 && enemy_movement == true) {
@@ -449,7 +443,7 @@ bool Scene::Update(float dt)
 		if (playery > enemy2y) {
 			enemy2y+=3.5;
 		}
-		
+
 		if (playerx +50>enemy2x && playerx < enemy2x +145 && playery + 3 >enemy2y && playery < enemy2y + 57 && God_Mode == 0) {//enemy2 colisions
 			app->render->DrawCircle(300, 300, 50, 100, 100, 100);
 			app->render->DrawTexture(blood, playerx + 10, playery, sangre);
@@ -467,10 +461,10 @@ bool Scene::Update(float dt)
 
 			app->scene->currentTicks_hit = 1;
 		}
-		
-		
+
+
 	}
-	
+
 
 	if (playerx < 8400) {
 		if (killcount3 == true) {
@@ -491,7 +485,7 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(helicopter_death, playerx + 800, 410);
 		}
 	}
-	
+
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1) {
 		playerx += velx;
@@ -509,7 +503,7 @@ bool Scene::Update(float dt)
 
 		app->render->DrawTexture(img, playerx-15, playery, playeran);
 	}
-		
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >=1) {
 		playerx -= velx;
 		playeran->x = left3->x;
@@ -525,10 +519,10 @@ bool Scene::Update(float dt)
 		playeran->w = right3->w;
 		playeran->h = right3->h;
 		app->render->DrawTexture(img, playerx, playery, playeran);
-		
+
 	}
 
-	if (app->map->colisionsy == true) {//gravetat sempre fins el terra			
+	if (app->map->colisionsy == true) {//gravetat sempre fins el terra
 		vely = 0;
 		jumping = false;
 	}
@@ -606,7 +600,7 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	
+
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -650,19 +644,36 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 }
 bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
-	pugi::xml_node player = configRenderer.child("player");
-	pugi::xml_node camera = configRenderer.child("camera");
-	pugi::xml_node enemy1 = configRenderer.child("enemy1");
-	pugi::xml_node enemy2 = configRenderer.child("enemy2");
-	pugi::xml_node enemy3 = configRenderer.child("enemy3");
-	pugi::xml_node enemy4 = configRenderer.child("enemy4");
-	pugi::xml_node enemy5 = configRenderer.child("enemy5");
-	
-	player.attribute("x").set_value(playerx);
-	player.attribute("y").set_value(playery);
 
-	camera.attribute("x").set_value(app->render->camera.x);
-	camera.attribute("y").set_value(app->render->camera.y);
+		pugi::xml_node player = configRenderer.child("player");
+		pugi::xml_node camera = configRenderer.child("camera");
+
+		pugi::xml_node enemy1 = configRenderer.child("enemy1");
+		pugi::xml_node enemy2 = configRenderer.child("enemy2");
+		pugi::xml_node enemy3 = configRenderer.child("enemy3");
+		pugi::xml_node enemy4 = configRenderer.child("enemy4");
+		pugi::xml_node enemy5 = configRenderer.child("enemy5");
+
+		player.attribute("x").set_value(playerx);
+		player.attribute("y").set_value(playery);
+
+		enemy1.attribute("x").set_value(enemy1x);
+		enemy1.attribute("y").set_value(enemy1y);
+
+		enemy2.attribute("x").set_value(enemy2x);
+		enemy2.attribute("y").set_value(enemy2y);
+
+		enemy3.attribute("x").set_value(enemy3x);
+		enemy3.attribute("y").set_value(enemy3y);
+
+		enemy4.attribute("x").set_value(enemy4x);
+		enemy4.attribute("y").set_value(enemy4y);
+
+		enemy5.attribute("x").set_value(enemy5x);
+		enemy5.attribute("y").set_value(enemy5y);
+
+		camera.attribute("x").set_value(app->render->camera.x);
+		camera.attribute("y").set_value(app->render->camera.y);
 
 
 
@@ -693,7 +704,7 @@ void Scene::gameLoop() {
 }
 
 void Scene::stop_and_shot() {
-	
+
 }
 
 void Scene::CalculateFPS() {

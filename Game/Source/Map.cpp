@@ -666,3 +666,5 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 	return ret;
 }
+
+

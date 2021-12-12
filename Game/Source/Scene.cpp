@@ -44,6 +44,8 @@ bool Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
+	fondo = app->tex->Load("Assets/textures/fondo1.jpg");
+
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
 	HelDer = app->tex->Load("Assets/textures/HelicopDer.png");
@@ -89,6 +91,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {	
+
+	app->render->DrawTexture(fondo,100,510);
+
 	app->map->Draw();
 
 	if (heart == true) {

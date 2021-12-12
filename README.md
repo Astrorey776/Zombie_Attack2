@@ -11,6 +11,7 @@ Normal:
 
  * D: Move right
  * A: Move Left
+ * K: Eat (attack)
  * SPACE: Jump
 
 While on God Mode:

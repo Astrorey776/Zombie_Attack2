@@ -50,12 +50,12 @@ The program has "FPS limiter", "Frame Counter" and the "Vsync" is on.
 * Colisions (both lateral, down vertical and up vertical that allows to jump from the bottom to the top)
 * Pop ups explaining the controls of the game
 * Improvement on the design of the first and unique level
-* Health system that sums hearts if the player touches any heart distributed on the map and substracts one if the character recieves damage
-* Damage recieved and response of the character if it touches the spikes
-* Hability to eat people around the map pressing the key K
+* Health system that sums hearts if the player touches any heart distributed on the map and subtracts one if the character receives damage
+* Damage received and response of the character if it touches the spikes
+* Ability to eat people around the map pressing the key K
 * Two kinds of enemies (land and air)
-* The land enemy (soldier) spawns when the player gets nearvy to its area and has a patrol route which disapears when the player gets nearby. When this happens, the enemy has more velocity and red eyes. The enemy has also colliders and is able to jump over "stairs". The enemy can be killed jumping on him while pressing K.
-* The air enemy (helicopter) spawns too when the character arrives to a certain area and follows the player untill it dies. Touching the razors of the helicopter or being crushed by him will kill the player instantly, however, touching the helicopter from the sides will substract one heart. The helicopter can be killed jumping at his bottom.
+* The land enemy (soldier) spawns when the player gets nearby to its area and has a patrol route which disappears when the player gets nearby. When this happens, the enemy has more velocity and red eyes. The enemy has also colliders and is able to jump over "stairs". The enemy can be killed jumping on him while pressing K.
+* The air enemy (helicopter) spawns too when the character arrives to a certain area and follows the player until it dies. Touching the razors of the helicopter or being crushed by him will kill the player instantly, however, touching the helicopter from the sides will subtract one heart. The helicopter can be killed jumping at his bottom.
 * There are now two checkpoints (graves), which change when they are activated.
 * When killing anything on the map, a dead version of it will appear on the right top of the screen to be able to measure the amount of destruction and death.
 * F1 now shows a lot more of colliders

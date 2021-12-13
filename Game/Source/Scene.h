@@ -141,6 +141,8 @@ private:
 	SDL_Texture* Personas_muertas;
 	SDL_Texture* blood;
 	SDL_Texture* exclamacion;
+	SDL_Texture* controls;
+	SDL_Texture* controls2;
 
 	SDL_Texture* checkpoint1;
 	SDL_Texture* checkpoint2;
@@ -148,7 +150,7 @@ private:
 	SDL_Texture* bullet1;
 
 	float _fps;
-	float _maxFPS;
+	float _maxFPS = 60.0f;
 	float _frameTime;
 
 

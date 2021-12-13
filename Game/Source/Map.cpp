@@ -244,13 +244,13 @@ void Map::Draw()
 
 						if (app->scene->playery < (y * 32) + 32 && app->scene->playery >y * 32 && app->scene->playerx+42>x*32 && app->scene->playerx <x*32+32) {
 							klk = true;
-							app->render->DrawCircle(500, 100, 50, 255, 255, 255);
+							//app->render->DrawCircle(500, 100, 50, 255, 255, 255);
 						}
 
 						if ((app->scene->playerx + 42 > (x * 32)) && (app->scene->playerx < (x * 32) + 32) &&
 							(app->scene->playery + 52 + app->scene->vely > (y * 32)) && (app->scene->playery - app->scene->vely + 48 < (y * 32)) && app->scene->God_Mode == 0) {
 							//Colliding vertical
-							app->render->DrawCircle(100, 100, 50, 250, 0, 0);
+							//app->render->DrawCircle(100, 100, 50, 250, 0, 0);
 							colisionsy = true;
 							klk = false;
 						}
@@ -263,20 +263,20 @@ void Map::Draw()
 							if (app->scene->playerx +10 <(x*32) +32 ) {// Passa de esquerra a dreta
 								app->scene->playerx = (x * 32) - 42;
 								aux_col = app->scene->playerx;
-								app->render->DrawCircle(300, 100, 50, 255, 0, 255);
+								//app->render->DrawCircle(300, 100, 50, 255, 0, 255);
 							}
 							if (app->scene->playerx - 10 > (x * 32)) {	//Passa d'esquerra a dreta
 								app->scene->playerx = (x * 32) + 32;
 								aux_col = app->scene->playerx;
-								app->render->DrawCircle(400, 100, 50, 255, 255, 255);
+								//app->render->DrawCircle(400, 100, 50, 255, 255, 255);
 							}
-							app->render->DrawCircle(200, 100, 50, 0, 0, 255);
+							//app->render->DrawCircle(200, 100, 50, 0, 0, 255);
 
 						}
 						if ((app->scene->enemy1x + 42 > (x * 32)) && (app->scene->enemy1x < (x * 32) + 32) &&
 							(app->scene->enemy1y + 56  > (y * 32)) && (app->scene->enemy1y   < (y * 32)) ) {
 							//Colliding vertical enemic
-							app->render->DrawCircle(600, 100, 50, 250, 0, 0);
+							//app->render->DrawCircle(600, 100, 50, 250, 0, 0);
 							colisionsy_enemy = true;
 							klk_ = false;
 						}
@@ -334,7 +334,7 @@ void Map::Draw()
 							app->scene->vidas -= 1;
 							//death = true;
 							
-							app->render->DrawCircle(200, 100, 50, 0, 255, 0);
+							//app->render->DrawCircle(200, 100, 50, 0, 255, 0);
 						}
 					}
 				}
@@ -374,7 +374,6 @@ iPoint Map::WorldToMap(int x, int y) const
 	// L05: TODO 2: Add orthographic world to map coordinates
 
 	// L05: TODO 3: Add the case for isometric maps to WorldToMap
-
 
 	return ret;
 }

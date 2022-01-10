@@ -6,12 +6,12 @@
 	<audio />
 	<scene />
 	<renderer>
-		<enemy1 x="0" y="0" />
-		<enemy2 x="0" y="0" />
+		<enemy1 x="1120" y="-57" />
+		<enemy2 x="598.599976" y="833" />
 		<enemy3 x="0" y="0" />
 		<enemy4 x="0" y="0" />
 		<enemy5 x="0" y="0" />
-		<player x="230" y="908.5" />
-		<camera x="-130" y="-400" />
+		<player x="1188" y="772" />
+		<camera x="-1100" y="-400" />
 	</renderer>
 </game_state>

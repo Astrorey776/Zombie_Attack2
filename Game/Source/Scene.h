@@ -34,6 +34,8 @@ public:
 	bool CleanUp();
 
 	bool menuDisplay = true;
+	int menuCount;
+	bool credit;
 	
 	float menuCoords[20] = { 510,630,205,45,
 						510,685,205,45,
@@ -123,6 +125,9 @@ private:
 
 	SDL_Texture* fondo;
 	SDL_Texture* menu;
+	SDL_Texture* menu2;
+	SDL_Texture* credits;
+	SDL_Texture* candado;
 	SDL_Texture* img;
 	SDL_Texture* pantalla1;
 	SDL_Texture* pantalla2;

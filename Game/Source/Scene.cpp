@@ -45,7 +45,9 @@ bool Scene::Start()
 	}
 
 	fondo = app->tex->Load("Assets/textures/fondo1.png");
-	menu = app->tex->Load("Assets/textures/MENU.png");
+	menu = app->tex->Load("Assets/textures/MENU1.png");
+	menu2 = app->tex->Load("Assets/textures/MENU.png");
+	credits = app->tex->Load("Assets/textures/Credits.png");
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
@@ -171,6 +173,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 		app->SaveGameRequest();
+		menuCount = 1;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
@@ -610,13 +613,18 @@ bool Scene::Update(float dt)
 		enemy2_state = false;
 	}
 
-	if ((app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)) {
+	if ((app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) ) {
 		menuDisplay = true;
 	}
 
 	if (menuDisplay == true && initial_screen >= 1) {
-
-		app->render->DrawTexture(menu, playerx + 250, 500);
+		if (menuCount == 0) {
+			app->render->DrawTexture(menu, playerx + 250, 500);
+		}
+		if (menuCount == 1) {
+			app->render->DrawTexture(menu2, playerx + 250, 500);
+		}
+		
 		int x, y;
 		Uint32 buttons;
 
@@ -633,23 +641,36 @@ bool Scene::Update(float dt)
 		for (int i = 0; i < 20; i += 4) {
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
 				
-				if (i == 0) {
+				if (i == 0 && credit == false) {
 					app->render->DrawRectangle(rect1, 0, 250, 0);
 					
 					if (app->input->GetMouseButtonDown(1)) {
-						menuDisplay = false;	
+						menuDisplay = false;
 					}
 				}
-				if (i == 4) {
-					app->render->DrawRectangle(rect2, 0, 0, 250);
+				if (i == 4 && menuCount == 1 && credit == false) {
+					app->render->DrawRectangle(rect2, 0, 250, 0);
+					if (app->input->GetMouseButtonDown(1)) {
+						app->LoadGameRequest();
+						menuDisplay = false;
+					}
 				}
-				if (i == 8) {
+				if (i == 4 && menuCount == 0 && credit == false) {
+					app->render->DrawRectangle(rect2, 127, 127, 127);
+				}
+				if (i == 8 && credit == false) {
 					app->render->DrawRectangle(rect3, 0, 0, 250);
+					
 				}
 				if (i == 12) {
-					app->render->DrawRectangle(rect4, 0, 0, 250);
+					app->render->DrawRectangle(rect4, 0, 250, 0);
+					if (app->input->GetMouseButtonDown(1)) {
+						
+						credit = true;
+					}
+
 				}
-				if (i == 16) {
+				if (i == 16 && credit == false) {
 					app->render->DrawRectangle(rect5, 250, 0, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						return false;
@@ -657,12 +678,26 @@ bool Scene::Update(float dt)
 				}
 				
 			}
-			else {
+		}
+	}
+	int x, y;
+	Uint32 buttons;
+
+	SDL_PumpEvents();  // make sure we have the latest mouse state.
+
+	buttons = SDL_GetMouseState(&x, &y);
+	if (credit == true) {
+		app->render->DrawTexture(credits, playerx-110, 400);
+		SDL_Rect rect6 = { playerx + 95,540,30,30 };
+		
+		if (x >= 195 && x <= 225 && y >= 140 && y <= 170) {
+			app->render->DrawRectangle(rect6, 250, 0, 0);
+			if (app->input->GetMouseButtonDown(1)) {
+				credit = false;
 			}
 		}
-
+		
 	}
-
 
 
 	gameLoop();
@@ -695,12 +730,6 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 	playerx = configRenderer.child("player").attribute("x").as_int();
 	playery = configRenderer.child("player").attribute("y").as_int();
 
-	enemy1x = configRenderer.child("enemy1").attribute("x").as_int();
-	enemy1y = configRenderer.child("enemy1").attribute("y").as_int();
-
-	enemy2x = configRenderer.child("enemy2").attribute("x").as_int();
-	enemy2y = configRenderer.child("enemy2").attribute("y").as_int();
-
 	enemy3x = configRenderer.child("enemy3").attribute("x").as_int();
 	enemy3y = configRenderer.child("enemy3").attribute("y").as_int();
 
@@ -722,20 +751,12 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 		pugi::xml_node player = configRenderer.child("player");
 		pugi::xml_node camera = configRenderer.child("camera");
 
-		pugi::xml_node enemy1 = configRenderer.child("enemy1");
-		pugi::xml_node enemy2 = configRenderer.child("enemy2");
 		pugi::xml_node enemy3 = configRenderer.child("enemy3");
 		pugi::xml_node enemy4 = configRenderer.child("enemy4");
 		pugi::xml_node enemy5 = configRenderer.child("enemy5");
 
 		player.attribute("x").set_value(playerx);
 		player.attribute("y").set_value(playery);
-
-		enemy1.attribute("x").set_value(enemy1x);
-		enemy1.attribute("y").set_value(enemy1y);
-
-		enemy2.attribute("x").set_value(enemy2x);
-		enemy2.attribute("y").set_value(enemy2y);
 
 		enemy3.attribute("x").set_value(enemy3x);
 		enemy3.attribute("y").set_value(enemy3y);

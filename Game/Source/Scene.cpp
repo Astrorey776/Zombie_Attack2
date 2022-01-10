@@ -45,6 +45,7 @@ bool Scene::Start()
 	}
 
 	fondo = app->tex->Load("Assets/textures/fondo1.png");
+	menu = app->tex->Load("Assets/textures/MENU.png");
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
@@ -100,7 +101,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
 	app->render->DrawTexture(fondo,0,405);
 
 	app->map->Draw();
@@ -595,7 +595,60 @@ bool Scene::Update(float dt)
 		enemy2_state = false;
 	}
 
-	
+	if ((app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)) {
+		menuDisplay = true;
+	}
+
+	if (menuDisplay == true && initial_screen >= 1) {
+
+		app->render->DrawTexture(menu, 350, 500);
+		int x, y;
+		Uint32 buttons;
+
+		SDL_PumpEvents();  // make sure we have the latest mouse state.
+
+		buttons = SDL_GetMouseState(&x, &y);
+		
+		SDL_Rect rect1 = { 510,630,205,45 };
+		SDL_Rect rect2 = { 510,685,205,45 };
+		SDL_Rect rect3 = { 510,740,205,45 };
+		SDL_Rect rect4 = { 510,790,205,45 };
+		SDL_Rect rect5 = { 510,845,205,45 };
+
+		for (int i = 0; i < 20; i += 4) {
+			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
+				
+				if (i == 0) {
+					app->render->DrawRectangle(rect1, 0, 0, 250);
+					
+					if (app->input->GetMouseButtonDown(1)) {
+						menuDisplay = false;	
+					}
+				}
+				if (i == 4) {
+					app->render->DrawRectangle(rect2, 0, 0, 250);
+				}
+				if (i == 8) {
+					app->render->DrawRectangle(rect3, 0, 0, 250);
+				}
+				if (i == 12) {
+					app->render->DrawRectangle(rect4, 0, 0, 250);
+				}
+				if (i == 16) {
+					app->render->DrawRectangle(rect5, 0, 0, 250);
+					if (app->input->GetMouseButtonDown(1)) {
+						return false;
+					}
+				}
+				
+			}
+			else {
+			}
+		}
+
+	}
+
+
 
 	gameLoop();
 	return true;

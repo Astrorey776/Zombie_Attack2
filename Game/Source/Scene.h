@@ -32,6 +32,15 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	bool menuDisplay = true;
+	
+	float menuCoords[20] = { 510,630,205,45,
+						510,685,205,45,
+						510,740,205,45,
+						510,790,205,45,
+						510,845,205,45 };
+	
 	float enemy1x =1900;
 	float enemy1y = 755;
 	bool killer_mode = false;
@@ -113,6 +122,7 @@ private:
 	void gameLoop();
 
 	SDL_Texture* fondo;
+	SDL_Texture* menu;
 	SDL_Texture* img;
 	SDL_Texture* pantalla1;
 	SDL_Texture* pantalla2;

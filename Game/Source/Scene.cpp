@@ -207,10 +207,10 @@ bool Scene::Update(float dt)
 	
 
 	if(God_Mode == 1){
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && menuDisplay == false) {
 			playery -= velx / 2;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && menuDisplay == false) {
 			playery += velx / 2;
 		}
 	}
@@ -219,20 +219,20 @@ bool Scene::Update(float dt)
 		app->map->colisionsx = false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false && menuDisplay == false) {
 		app->render->camera.x -= velx;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >= 1 && playerx < 8400 && app->map->colisionsx == false && menuDisplay == false) {
 		app->render->camera.x += velx;
 	}
 
-	if (playerx + 700 >= enemy1x && activate1 == false) {
+	if (playerx + 700 >= enemy1x && activate1 == false && menuDisplay == false) {
 		enemy1_state = true;
 		activate1 = true;
 	}
 
-	if (playerx + 700 >= enemy2x && activate2 == false) {
+	if (playerx + 700 >= enemy2x && activate2 == false && menuDisplay == false) {
 		enemy2_state = true;
 		activate2 = true;
 	}
@@ -377,10 +377,7 @@ bool Scene::Update(float dt)
 
 	}
 
-
-
-
-	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {//Matar enemic1
+	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT && menuDisplay == false) {//Matar enemic1
 		enemy1_state = false;
 		app->render->DrawTexture(blood, enemy1x +10, enemy1y, sangre);
 	}
@@ -389,14 +386,19 @@ bool Scene::Update(float dt)
 	if (enemy1_state == true && activate1 == true && killer_mode == false) {//Enemy1 movement
 		if (enemy1x > 1572 && enemy_movement == true) {
 			app->render->DrawTexture(SoldDer1_, enemy1x, enemy1y);
-			enemy1x += 3;
+			if (menuDisplay == false) {
+				enemy1x += 3;
+			}
+			
 		}
 		if (enemy1x >= 2175) {
 			enemy_movement = false;
 		}
 		if (enemy1x <= 2176 && enemy_movement == false) {
 			app->render->DrawTexture(SoldIzq1_, enemy1x, enemy1y);
-			enemy1x -= 3;
+			if (menuDisplay == false) {
+				enemy1x -= 3;
+			}
 		}
 		if (enemy1x <= 1575) {
 			enemy_movement = true;
@@ -414,38 +416,50 @@ bool Scene::Update(float dt)
 		//app->render->DrawCircle(200, 200, 50, 70, 90, 100);
 		if (playerx > enemy1x) {
 			app->render->DrawTexture(SoldDer1, enemy1x, enemy1y);
-			enemy1x += 5;
+			if (menuDisplay == false) {
+				enemy1x += 5;
+			}
+			
 		}
 		if (playerx < enemy1x) {
 			app->render->DrawTexture(SoldIzq1, enemy1x, enemy1y);
-			enemy1x -= 5;
+			if (menuDisplay == false) {
+				enemy1x -= 5;
+			}
 		}
 		if (playerx == enemy1x) {
 			app->render->DrawTexture(SoldIzq1, enemy1x, enemy1y);
 		}
 
 	}
-	if (playerx + 50 > enemy2x && playerx < enemy2x + 145 && playery>enemy2y + 57 && playery < enemy2y + 67 && God_Mode == 0 && enemy2_state == true && activate2 == true && jumping == true) {
+	if (playerx + 50 > enemy2x && playerx < enemy2x + 145 && playery>enemy2y + 57 && playery < enemy2y + 67 && God_Mode == 0 && enemy2_state == true && activate2 == true && jumping == true && menuDisplay == false) {
 		enemy2_state = false;
 		helicopter = true;
 	}
 	if (enemy2_state == true && activate2 == true) {//enemy2 movement
 		if (playerx > enemy2x) {
 			app->render->DrawTexture(HelDer, enemy2x, enemy2y);
-			enemy2x+=3;
+			if (menuDisplay == false) {
+				enemy2x += 3;
+			}
+			
 		}
 		if (playerx > enemy2x+300) {
 			app->render->DrawTexture(HelDer, enemy2x, enemy2y);
-			enemy2x+=4.2;
+			if (menuDisplay == false) {
+				enemy2x += 4.2;
+			}
 		}
 		if (playerx < enemy2x) {
 			app->render->DrawTexture(HelIzq, enemy2x, enemy2y);
-			enemy2x-=3;
+			if (menuDisplay == false) {
+				enemy2x -= 3;
+			}
 		}
-		if (playery < enemy2y) {
+		if (playery < enemy2y && menuDisplay == false) {
 			enemy2y-=1.5;
 		}
-		if (playery > enemy2y) {
+		if (playery > enemy2y && menuDisplay == false) {
 			enemy2y+=3.5;
 		}
 
@@ -492,7 +506,7 @@ bool Scene::Update(float dt)
 	}
 
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && initial_screen >= 1 && menuDisplay == false) {
 		playerx += velx;
 		/*dreta.PushBack({139,0,50,56});
 		dreta.PushBack({189,0,46,56});
@@ -509,7 +523,7 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(img, playerx-15, playery, playeran);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >=1) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && initial_screen >=1 && menuDisplay == false) {
 		playerx -= velx;
 		playeran->x = left3->x;
 		playeran->y = left3->y;
@@ -518,7 +532,7 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(img, playerx+2, playery, playeran);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == NULL && app->input->GetKey(SDL_SCANCODE_D) == NULL){
+	if ((app->input->GetKey(SDL_SCANCODE_A) == NULL && app->input->GetKey(SDL_SCANCODE_D) == NULL) || menuDisplay == true){
 		playeran->x = right3->x;
 		playeran->y = right3->y;
 		playeran->w = right3->w;
@@ -540,15 +554,16 @@ bool Scene::Update(float dt)
 		vely -= gravity;
 	}
 
-
 	app->map->colisionsy = false;
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping==false && God_Mode == 0) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping==false && God_Mode == 0 && menuDisplay == false) {
 		app->map->colisionsy = false;
 		vely = -10;
 		jumping = true;
 	}
-
-	playery += vely;
+	if (menuDisplay == false) {
+		playery += vely;
+	}
+	
 
 	// Draw map
 
@@ -601,7 +616,7 @@ bool Scene::Update(float dt)
 
 	if (menuDisplay == true && initial_screen >= 1) {
 
-		app->render->DrawTexture(menu, 350, 500);
+		app->render->DrawTexture(menu, playerx + 250, 500);
 		int x, y;
 		Uint32 buttons;
 
@@ -609,17 +624,17 @@ bool Scene::Update(float dt)
 
 		buttons = SDL_GetMouseState(&x, &y);
 		
-		SDL_Rect rect1 = { 510,630,205,45 };
-		SDL_Rect rect2 = { 510,685,205,45 };
-		SDL_Rect rect3 = { 510,740,205,45 };
-		SDL_Rect rect4 = { 510,790,205,45 };
-		SDL_Rect rect5 = { 510,845,205,45 };
+		SDL_Rect rect1 = { playerx + 410,630,205,45 };
+		SDL_Rect rect2 = { playerx + 410,685,205,45 };
+		SDL_Rect rect3 = { playerx + 410,740,205,45 };
+		SDL_Rect rect4 = { playerx + 410,790,205,45 };
+		SDL_Rect rect5 = { playerx + 410,845,205,45 };
 
 		for (int i = 0; i < 20; i += 4) {
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
 				
 				if (i == 0) {
-					app->render->DrawRectangle(rect1, 0, 0, 250);
+					app->render->DrawRectangle(rect1, 0, 250, 0);
 					
 					if (app->input->GetMouseButtonDown(1)) {
 						menuDisplay = false;	
@@ -635,7 +650,7 @@ bool Scene::Update(float dt)
 					app->render->DrawRectangle(rect4, 0, 0, 250);
 				}
 				if (i == 16) {
-					app->render->DrawRectangle(rect5, 0, 0, 250);
+					app->render->DrawRectangle(rect5, 250, 0, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						return false;
 					}

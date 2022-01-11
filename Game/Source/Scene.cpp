@@ -302,7 +302,7 @@ bool Scene::Update(float dt)
 
 
 
-	if (people_aux == true && people_aux_int ==0) {
+	if (people_aux == true && people_aux_int == 0) {
 		app->render->DrawTexture(Personas, 800, 905, people);
 	}
 
@@ -650,18 +650,7 @@ bool Scene::Update(float dt)
 				if (i == 4 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect2, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
-						pauseDisplay = false;
-						playery = 510;
-						playerx = 100;
-						playeran->y = 510;
-						playeran->x = 100;
-						app->render->camera.x = 0;
-						app->render->camera.y = -400;
-						enemy1_state = false;
-						enemy2_state = false;
-						activate1 = false;
-						activate2 = false;
-						initial_screen = -1;
+						Reset();
 					}
 				}
 				if (i == 8 && credit == false && settings == false) {
@@ -874,6 +863,92 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 
 	return true;
 }
+
+void Scene :: Reset() {
+
+	app->scene->pauseDisplay = false;
+	
+	app->render->camera.x = 0;
+	app->render->camera.y = -400;
+
+	app->scene->tick1 = false;
+	app->scene->tick2 = false;
+	app->scene->tickAux = 1;
+	app->scene->tickAux2 = 1;
+
+	app->scene->enemy1x = 1900;
+	app->scene->enemy1y = 755;
+	app->scene->killer_mode = false;
+
+	app->scene->enemy2x = 5000;
+	app->scene->enemy2y = 700;
+
+	app->scene->enemy3x = 0;
+	app->scene->enemy3y = 0;
+
+	app->scene->enemy4x = 0;
+	app->scene->enemy4y = 0;
+
+	app->scene->enemy5x = 0;
+	app->scene->enemy5y = 0;
+
+	app->scene->playerx = 100.0;
+	app->scene->playery = 510.0;
+	app->scene->velx = 10;
+	app->scene->vely = 200;
+
+	app->scene->gravity = -0.5;
+	app->scene->initial_y1;
+	app->scene->jumping;
+	app->scene->Show_colliders = 0;
+	app->scene->God_Mode = 0;
+	app->scene->initial_screen = -1.0;
+
+	app->scene->killcount1 = false;
+	app->scene->killcount2 = false;
+	app->scene->killcount3 = false;
+	app->scene->vidas = 3;
+	app->scene->heart = true;
+	app->scene->heart2 = true;
+	app->scene->currentTicks_hit = 0;
+	app->scene->aux_pos;
+
+	app->scene->aux_check1 = false;
+	app->scene->aux_check2 = false;
+
+	app->scene->enemy_movement = true;
+	app->scene->enemy1_state = false;
+	app->scene->enemy2_state = false;
+	app->scene->helicopter = false;
+	app->scene->activate1 = false;
+	app->scene->activate2 = false;
+
+	app->scene->people_aux = true;
+	app->scene->people_aux2 = true;
+	app->scene->people_aux3 = true;
+	app->scene->people_aux_int = 0;
+	app->scene->stop = false;
+	app->scene->shot_state = false;
+	app->scene->shotx = enemy2x;
+	app->scene->shoty = enemy2y + 40;
+
+	app->scene->h = 0;
+	app->scene->sliderAux;
+	app->scene->sliderAux_;
+	app->scene->sliderAux2;
+
+	app->map->colisionsy;
+	app->map->colisionsx = false;
+	app->map->colisionsy_enemy;
+	app->map->colisionsx_enemy = false;
+	app->map->aux_col;
+	app->map->death = false;
+
+	app->map->klk;
+	app->map->klk_;
+
+}
+
 bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
 

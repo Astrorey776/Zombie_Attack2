@@ -78,8 +78,6 @@ public:
 	int Show_colliders = 0;
 	int God_Mode = 0;
 	float initial_screen = -1.0;
-	Animation dreta;
-	Animation esquerra;
 
 	bool killcount1 = false;
 	bool killcount2 = false;
@@ -120,6 +118,8 @@ public:
 	float sliderAux;
 	float sliderAux_;
 	float sliderAux2;
+
+	void Reset();
 
 	bool LoadState(pugi::xml_node&);
 
@@ -165,8 +165,7 @@ private:
 	SDL_Texture* enemy_death;
 
 	SDL_Texture* corazon;
-	SDL_Texture* corazon_2
-		;
+	SDL_Texture* corazon_2;
 
 	SDL_Texture* Personas;
 	SDL_Texture* Personas_muertas;

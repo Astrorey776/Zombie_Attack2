@@ -34,14 +34,15 @@ public:
 	bool CleanUp();
 
 	bool menuDisplay = true;
+	bool pauseDisplay = false;
 	int menuCount;
 	bool credit;
 	bool settings;
-	float sliderAux = playerx + 450;
-	float sliderAux2 = playerx + 450;
+
 	bool tick1 = false;
 	bool tick2 = false;
-	int tickAux;
+	int tickAux = 1;
+	int tickAux2 = 1;
 	
 	float menuCoords[20] = { 510,630,205,45,
 						510,685,205,45,
@@ -115,6 +116,11 @@ public:
 	float shotx = enemy2x;
 	float shoty = enemy2y + 40;
 
+	int h = 0;
+	float sliderAux;
+	float sliderAux_;
+	float sliderAux2;
+
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
@@ -136,6 +142,7 @@ private:
 	SDL_Texture* setting;
 	SDL_Texture* slider;
 	SDL_Texture* tick;
+	SDL_Texture* pause;
 	SDL_Texture* candado;
 	SDL_Texture* img;
 	SDL_Texture* pantalla1;

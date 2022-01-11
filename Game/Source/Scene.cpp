@@ -51,6 +51,7 @@ bool Scene::Start()
 	setting = app->tex->Load("Assets/textures/Settings.png");
 	slider = app->tex->Load("Assets/textures/slider.png");
 	tick = app->tex->Load("Assets/textures/tick.png");
+	pause = app->tex->Load("Assets/textures/PAUSE.png");
 
 	img = app->tex->Load("Assets/textures/zombie_sprites.png");
 
@@ -617,7 +618,70 @@ bool Scene::Update(float dt)
 		enemy2_state = false;
 	}
 
-	if (menuDisplay == true && initial_screen >= 1) {
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && menuDisplay == false && pauseDisplay == false) {
+		menuDisplay = true;
+		pauseDisplay = true;
+	}
+	int x, y;
+	Uint32 buttons;
+
+	SDL_PumpEvents();  // make sure we have the latest mouse state.
+
+	buttons = SDL_GetMouseState(&x, &y);
+
+	SDL_Rect rect1 = { playerx + 410,630,205,45 };
+	SDL_Rect rect2 = { playerx + 410,685,205,45 };
+	SDL_Rect rect3 = { playerx + 410,740,205,45 };
+	SDL_Rect rect4 = { playerx + 410,790,205,45 };
+	SDL_Rect rect5 = { playerx + 410,845,205,45 };
+
+	if (pauseDisplay == true) {
+		app->render->DrawTexture(pause, playerx + 250, 500);
+		for (int i = 0; i < 20; i += 4) {
+			if ((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i + 2]) && y >= menuCoords[i + 1] - 400 && y <= menuCoords[i + 3] + menuCoords[i + 1] - 400) {
+
+				if (i == 0 && credit == false) {
+					app->render->DrawRectangle(rect1, 0, 250, 0);
+
+					if (app->input->GetMouseButtonDown(1)) {
+						pauseDisplay = false;
+					}
+				}
+				if (i == 4 && credit == false && settings == false) {
+					app->render->DrawRectangle(rect2, 0, 250, 0);
+					if (app->input->GetMouseButtonDown(1)) {
+						pauseDisplay = false;
+						playery = 510;
+						playerx = 100;
+						playeran->y = 510;
+						playeran->x = 100;
+						app->render->camera.x = 0;
+						app->render->camera.y = -400;
+						enemy1_state = false;
+						enemy2_state = false;
+						activate1 = false;
+						activate2 = false;
+						initial_screen = -1;
+					}
+				}
+				if (i == 8 && credit == false && settings == false) {
+					app->render->DrawRectangle(rect3, 0, 250, 0);
+					if (app->input->GetMouseButtonDown(1)) {
+						settings = true;
+					}
+				}
+				if (i == 12 && credit == false && settings == false) {
+					app->render->DrawRectangle(rect4, 250, 0, 0);
+					if (app->input->GetMouseButtonDown(1)) {
+						return false;
+					}
+				}
+
+			}
+		}
+	}
+
+	if (menuDisplay == true && initial_screen >= 1 && pauseDisplay == false) {
 		if (menuCount == 0) {
 			app->render->DrawTexture(menu, playerx + 250, 500);
 		}
@@ -641,7 +705,7 @@ bool Scene::Update(float dt)
 		for (int i = 0; i < 20; i += 4) {
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
 				
-				if (i == 0 && credit == false) {
+				if (i == 0 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect1, 0, 250, 0);
 					
 					if (app->input->GetMouseButtonDown(1)) {
@@ -683,8 +747,6 @@ bool Scene::Update(float dt)
 			}
 		}
 	}
-	int x, y;
-	Uint32 buttons;
 
 	SDL_PumpEvents();  // make sure we have the latest mouse state.
 
@@ -701,10 +763,12 @@ bool Scene::Update(float dt)
 		}
 		
 	}
+
 	if (settings == true) {
+
 		app->render->DrawTexture(setting, playerx - 110, 400);
-		app->render->DrawTexture(slider, sliderAux, 675);
-		app->render->DrawTexture(slider, sliderAux2, 745);
+		app->render->DrawTexture(slider, sliderAux + playerx + 350, 675);
+		app->render->DrawTexture(slider, sliderAux2 + playerx + 350, 745);
 		SDL_Rect rect6 = { playerx + 95,540,30,30 };
 		if (x >= 195 && x <= 225 && y >= 140 && y <= 170) {
 			app->render->DrawRectangle(rect6, 250, 0, 0);
@@ -712,29 +776,31 @@ bool Scene::Update(float dt)
 				settings = false;
 			}
 		}
-		if (x >= sliderAux && x <= sliderAux + 50 && y >= 275 && y <= 325) {
+		if (x >= sliderAux + 450 && x <= sliderAux + 500 && y >= 275 && y <= 325) {
 			if (app->input->GetMouseButtonDown(1)) {
-				sliderAux = x - 25;
-				if (sliderAux > 900) {
-					sliderAux = 900;
+				if (x > 925) {
+					x = 925;
 				}
-				if (sliderAux < playerx + 350) {
-					sliderAux = playerx + 350;
+				if (x < 475) {
+					x = 475;
 				}
+				sliderAux = x - 450 - 25;
+				
 			}
 		}
-		if (x >= sliderAux2 && x <= sliderAux2 + 50 && y >= 345 && y <= 395) {
+		if (x >= sliderAux2 + 450 && x <= sliderAux2 + 500 && y >= 345 && y <= 395) {
 			if (app->input->GetMouseButtonDown(1)) {
-				sliderAux2 = x - 25;
-				if (sliderAux2 > 900) {
-					sliderAux2 = 900;
+				if (x > 925) {
+					x = 925;
 				}
-				if (sliderAux2 < playerx + 350) {
-					sliderAux2 = playerx + 350;
+				if (x < 475) {
+					x = 475;
 				}
+				sliderAux2 = x - 450 - 25;
+
 			}
 		}
-		if (x > 465 && x < 465 + 58 && y >= 500 && y <= 550) {
+		if (x > 465 && x < playerx + 365 + 58 && y >= 500 && y <= 550) {
 			//SDL_Rect rect8 = { playerx + 365,900,58,50 };
 			//app->render->DrawRectangle(rect8, 0, 250, 0);
 			if (app->input->GetMouseButtonDown(1) && tick1 == false) {
@@ -752,14 +818,15 @@ bool Scene::Update(float dt)
 			}
 			else if (app->input->GetMouseButtonDown(1) && tick2 == true) {
 				tick2 = false;
+
 			}
 		}
 		
 		if (tick1 == true) {
-			app->render->DrawTexture(tick, 465, 900);
+			app->render->DrawTexture(tick, playerx + 365, 900);
 		}
 		if (tick2 == true) {
-			app->render->DrawTexture(tick, 788, 900);
+			app->render->DrawTexture(tick, playerx + 688, 900);
 		}
 
 	}
@@ -774,9 +841,7 @@ bool Scene::PostUpdate()
 
 	
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
+	
 	return ret;
 }
 

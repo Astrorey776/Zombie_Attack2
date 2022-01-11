@@ -36,6 +36,12 @@ public:
 	bool menuDisplay = true;
 	int menuCount;
 	bool credit;
+	bool settings;
+	float sliderAux = playerx + 450;
+	float sliderAux2 = playerx + 450;
+	bool tick1 = false;
+	bool tick2 = false;
+	int tickAux;
 	
 	float menuCoords[20] = { 510,630,205,45,
 						510,685,205,45,
@@ -127,6 +133,9 @@ private:
 	SDL_Texture* menu;
 	SDL_Texture* menu2;
 	SDL_Texture* credits;
+	SDL_Texture* setting;
+	SDL_Texture* slider;
+	SDL_Texture* tick;
 	SDL_Texture* candado;
 	SDL_Texture* img;
 	SDL_Texture* pantalla1;

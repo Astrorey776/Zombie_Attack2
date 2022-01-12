@@ -119,6 +119,14 @@ public:
 	float sliderAux_;
 	float sliderAux2;
 
+	uint score = 000000;
+	SDL_Rect nums[10];
+	SDL_Texture* font;
+
+	void Font();
+
+	void PrintFont(int x, int y, uint score_);
+
 	void Reset();
 
 	bool LoadState(pugi::xml_node&);
@@ -126,7 +134,6 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	void DebugPath();
-	
 	
 
 private:
@@ -182,6 +189,8 @@ private:
 	uint eat = 1;
 	uint click = 3;
 	uint hold = 2;
+
+
 
 	float _fps;
 	float _maxFPS = 60.0f;

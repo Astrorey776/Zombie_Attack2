@@ -36,7 +36,7 @@ bool Scene::Start()
 
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
-
+	score = 500;
 	if (app->map->Load("Ciudad_3.tmx") == true)
 	{
 		int w, h;
@@ -97,6 +97,9 @@ bool Scene::Start()
 	eat = app->audio->LoadFx("Assets/audio/fx/eat.wav");
 	click = app->audio->LoadFx("Assets/audio/fx/click.wav");
 	hold = app->audio->LoadFx("Assets/audio/fx/hold.wav");
+
+	font = app->tex->Load("Assets/textures/nums_score.png");
+
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	return true;
@@ -305,7 +308,6 @@ bool Scene::Update(float dt)
 	//SDL_Rect enemyRect_kill = {enemy1x, enemy1y-10, 44, 10 };
 
 
-
 	if (people_aux == true && people_aux_int == 0) {
 		app->render->DrawTexture(Personas, 800, 905, people);
 	}
@@ -335,16 +337,19 @@ bool Scene::Update(float dt)
 			if (i == 0) {
 				people_aux = false;
 				killcount1 = true;
+				score += 200;
 				app->audio->PlayFx(eat);
 			}
 			if (i == 4) {
 				people_aux2 = false;
 				killcount2 = true;
+				score += 200;
 				app->audio->PlayFx(eat);
 			}
 			if (i == 8) {
 				people_aux3 = false;
 				killcount3 = true;
+				score += 200;
 				app->audio->PlayFx(eat);
 			}
 
@@ -363,10 +368,12 @@ bool Scene::Update(float dt)
 
 			if (i == 0 && heart == true) {
 				heart = false;
+				score += 50;
 				vidas += 1;
 			}
 			if (i == 4 && heart2 == true) {
 				heart2 = false;
+				score += 50;
 				vidas += 1;
 			}
 		}
@@ -375,16 +382,18 @@ bool Scene::Update(float dt)
 	if (playerx + 50 > enemy1x && playerx<enemy1x + 44 && playery > enemy1y && playery < enemy1y + 64 && enemy1_state == true) {
 		//app->render->DrawCircle(300, 300, 50,100, 100, 100);
 
-		if (playerx < enemy1x) {
+		if (playerx < enemy1x && God_Mode == 0) {
 			playerx -= 40;
 			app->render->camera.x += 40;
 			app->scene->vidas -= 1;
+			score -= 100;
 		}
 
-		if (playerx > enemy1x) {
+		if (playerx > enemy1x  && God_Mode == 0) {
 			playerx += 40;
 			app->render->camera.x -= 40;
 			app->scene->vidas -= 1;
+			score -= 100;
 		}
 
 		app->scene->currentTicks_hit = 1;
@@ -393,6 +402,7 @@ bool Scene::Update(float dt)
 
 	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT && menuDisplay == false) {//Matar enemic1
 		enemy1_state = false;
+		score += 500;
 		app->render->DrawTexture(blood, enemy1x +10, enemy1y, sangre);
 	}
 
@@ -449,6 +459,7 @@ bool Scene::Update(float dt)
 	if (playerx + 50 > enemy2x && playerx < enemy2x + 145 && playery>enemy2y + 57 && playery < enemy2y + 67 && God_Mode == 0 && enemy2_state == true && activate2 == true && jumping == true && menuDisplay == false) {
 		enemy2_state = false;
 		helicopter = true;
+		score += 1000;
 	}
 	if (enemy2_state == true && activate2 == true) {//enemy2 movement
 		if (playerx > enemy2x) {
@@ -805,7 +816,7 @@ bool Scene::Update(float dt)
 
 			}
 		}
-		if (x > 465 && x < playerx + 365 + 58 && y >= 500 && y <= 550) {
+		if (x > 465 && x < 465 + 58 && y >= 500 && y <= 550) {
 			//SDL_Rect rect8 = { playerx + 365,900,58,50 };
 			//app->render->DrawRectangle(rect8, 0, 250, 0);
 			if (app->input->GetMouseButtonDown(1) && tick1 == false) {
@@ -834,6 +845,23 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(tick, playerx + 688, 900);
 		}
 
+	}
+
+	Font();
+
+	if (initial_screen >= 1 && app->map->death == false  && playerx < 8400) {
+		PrintFont(playerx + 400, 450, score);
+	}
+	if (playerx >= 8400) {
+		PrintFont(8800, 450, score);
+	}
+
+	if (app->map->death == true) {
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+			score = 0;
+			return 0;
+		}
+		PrintFont(playerx + 450, 975, score);
 	}
 
 	gameLoop();
@@ -878,6 +906,25 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 	app->render->camera.y = configRenderer.child("camera").attribute("y").as_int();
 
 	return true;
+}
+
+void Scene::Font()
+{
+	for (int x = 0; x < 10; x++) {
+		nums[x] = { x * 22, 0, 23,44 };
+	}
+}
+
+void Scene::PrintFont(int x, int y, uint score_) {
+
+	int score_temp = score_;
+	for (int i = 8; i >= 0; i--) {
+		int temp = score_temp % 10;
+		app->render->DrawTexture(font, i * 22 + x, y, &nums[temp]);
+		score_temp = score_temp / 10;
+	}
+
+
 }
 
 void Scene :: Reset() {
@@ -962,6 +1009,8 @@ void Scene :: Reset() {
 
 	app->map->klk;
 	app->map->klk_;
+
+	app->scene->score = 500;
 
 }
 

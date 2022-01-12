@@ -179,6 +179,9 @@ private:
 
 	SDL_Texture* bullet1;
 
+	uint eat = 1;
+	uint click = 2;
+
 	float _fps;
 	float _maxFPS = 60.0f;
 	float _frameTime;

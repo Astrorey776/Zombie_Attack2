@@ -114,7 +114,7 @@ public:
 	float shotx = enemy2x;
 	float shoty = enemy2y + 40;
 
-	int h = 0;
+	int h = 4;
 	float sliderAux;
 	float sliderAux_;
 	float sliderAux2;
@@ -180,7 +180,8 @@ private:
 	SDL_Texture* bullet1;
 
 	uint eat = 1;
-	uint click = 2;
+	uint click = 3;
+	uint hold = 2;
 
 	float _fps;
 	float _maxFPS = 60.0f;

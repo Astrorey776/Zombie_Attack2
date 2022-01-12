@@ -648,20 +648,16 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(pause, playerx + 250, 500);
 		for (int i = 0; i < 20; i += 4) {
 			if ((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i + 2]) && y >= menuCoords[i + 1] - 400 && y <= menuCoords[i + 3] + menuCoords[i + 1] - 400) {
-
-				if (i == 0 && credit == false) {
-
-					app->audio->PlayFx(hold);
+				app->audio->PlayFx(hold);
+				if (i == 0 && credit == false) {	
 					app->render->DrawRectangle(rect1, 0, 250, 0);
-
+					
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
 						pauseDisplay = false;
 					}
 				}
+				
 				if (i == 4 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect2, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
@@ -669,8 +665,6 @@ bool Scene::Update(float dt)
 					}
 				}
 				if (i == 8 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect3, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
@@ -678,14 +672,11 @@ bool Scene::Update(float dt)
 					}
 				}
 				if (i == 12 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect4, 250, 0, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						return false;
 					}
 				}
-
 			}
 		}
 	}
@@ -713,10 +704,8 @@ bool Scene::Update(float dt)
 
 		for (int i = 0; i < 20; i += 4) {
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
-				
+				app->audio->PlayFx(hold);
 				if (i == 0 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect1, 0, 250, 0);
 					
 					if (app->input->GetMouseButtonDown(1)) {
@@ -725,8 +714,6 @@ bool Scene::Update(float dt)
 					}
 				}
 				if (i == 4 && menuCount == 1 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect2, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
@@ -735,14 +722,10 @@ bool Scene::Update(float dt)
 					}
 				}
 				if (i == 4 && menuCount == 0 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect2, 127, 127, 127);
 					
 				}
 				if (i == 8 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect3, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
@@ -751,8 +734,6 @@ bool Scene::Update(float dt)
 				}
 				if (i == 12) {
 					app->render->DrawRectangle(rect4, 0, 250, 0);
-
-					app->audio->PlayFx(hold);
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
 						credit = true;
@@ -760,8 +741,6 @@ bool Scene::Update(float dt)
 
 				}
 				if (i == 16 && credit == false && settings == false) {
-
-					app->audio->PlayFx(hold);
 					app->render->DrawRectangle(rect5, 250, 0, 0);
 					if (app->input->GetMouseButtonDown(1)) {
 						return false;

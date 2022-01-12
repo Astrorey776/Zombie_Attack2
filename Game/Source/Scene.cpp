@@ -648,7 +648,7 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(pause, playerx + 250, 500);
 		for (int i = 0; i < 20; i += 4) {
 			if ((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i + 2]) && y >= menuCoords[i + 1] - 400 && y <= menuCoords[i + 3] + menuCoords[i + 1] - 400) {
-				app->audio->PlayFx(hold);
+				//app->audio->PlayFx(hold);
 				if (i == 0 && credit == false) {	
 					app->render->DrawRectangle(rect1, 0, 250, 0);
 					
@@ -704,7 +704,7 @@ bool Scene::Update(float dt)
 
 		for (int i = 0; i < 20; i += 4) {
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
-				app->audio->PlayFx(hold);
+				//app->audio->PlayFx(hold);
 				if (i == 0 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect1, 0, 250, 0);
 					

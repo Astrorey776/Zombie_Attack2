@@ -36,7 +36,6 @@ bool Scene::Start()
 
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
-	score = 500;
 	if (app->map->Load("Ciudad_3.tmx") == true)
 	{
 		int w, h;
@@ -100,6 +99,8 @@ bool Scene::Start()
 
 	font = app->tex->Load("Assets/textures/nums_score.png");
 	clock = app->tex->Load("Assets/textures/clock.png");
+	clock2 = app->tex->Load("Assets/textures/clock2.png");
+	seconds = app->tex->Load("Assets/textures/10_seconds.png");
 
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -126,6 +127,13 @@ bool Scene::Update(float dt)
 
 	if (heart2 == true) {
 		app->render->DrawTexture(corazon_2, 5650, 915);
+	}
+
+	if (clock_ == true) {
+		app->render->DrawTexture(clock2, 3100, 905);
+	}
+	if (clock2_ == true) {
+		app->render->DrawTexture(clock2, 7410, 540);
 	}
 	if (aux_check1 == false) {
 		app->render->DrawTexture(checkpoint1, 3300, 905);
@@ -306,6 +314,12 @@ bool Scene::Update(float dt)
 	sangre->y = 0;
 	sangre->w = 53;
 	sangre->h = 42;
+	
+	SDL_Rect* clock1 = new SDL_Rect();
+	sangre->x = 0;
+	sangre->y = 0;
+	sangre->w = 38;
+	sangre->h = 45;
 
 	//SDL_Rect enemyRect = {enemy1x, enemy1y, 44, 44 };
 	//SDL_Rect enemyRect_kill = {enemy1x, enemy1y-10, 44, 10 };
@@ -335,6 +349,24 @@ bool Scene::Update(float dt)
 
 	//800,905,37,54
 	people_aux_int;
+
+	for (int i = clock_aux_int; i < 8; i += 4) {//colisions amb els power ups de temps
+		if (playerx > clock_hitboxes[i] - clock_hitboxes[i + 2] && playerx < clock_hitboxes[i] + clock_hitboxes[i + 2] && playery > clock_hitboxes[i + 1] && playery < clock_hitboxes[i + 1] + clock_hitboxes[i + 3]) {
+			
+			if (i == 0 && clock_ == true) {
+				t -= 10;
+				app->render->DrawTexture(seconds, playerx + 550,1000);
+				clock_ = false;
+			}
+			if (i == 4 && clock2_ == true) {
+				t -= 10;
+				app->render->DrawTexture(seconds, playerx + 550, 1000);
+				clock2_ = false;
+			}
+			clock_aux_int = i+4;
+		}
+	}
+
 	for (int i = people_aux_int; i < 12; i += 4) {//colisions amb les persones que pots matar
 		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3] && app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 			if (i == 0) {
@@ -621,7 +653,19 @@ bool Scene::Update(float dt)
 
 	if (playerx >= 9500) {
 		initial_screen = 0;
+		end2 = true;
 		app->render->DrawTexture(pantalla2, playerx - 1200, 400, NULL);
+		if (end == false) {
+
+			timeraux4 = time;
+			
+			end = true;
+			for (i = 0; i < timeraux4; i++) {
+				score += 10;
+			}
+		}
+		
+		
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 				return 0;
 		}
@@ -651,6 +695,10 @@ bool Scene::Update(float dt)
 
 		app->audio->PlayFx(hold);
 	}
+	if (score < 0) {
+		score = 0;
+	}
+
 	int x, y;
 	Uint32 buttons;
 
@@ -888,6 +936,9 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		t += 10;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+		t -= 10;
+	}
 	if (timeraux == true && playerx < 8400 && app->map->death == false && playerx < 9500) {
 		time =  timeraux3 - (timer - timeraux2) - t;
 		PrintFont2(playerx + 450, 1000, time);
@@ -908,9 +959,6 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	
-
-	
 	return ret;
 }
 
@@ -1057,7 +1105,7 @@ void Scene :: Reset() {
 	app->map->klk;
 	app->map->klk_;
 
-	app->scene->score = 500;
+	app->scene->score = 0;
 	app->scene->time = 000;
 
 	app->scene->timer;
@@ -1065,7 +1113,7 @@ void Scene :: Reset() {
 	app->scene->timeraux_ = false;
 	app->scene->timeraux2;
 	app->scene->timeraux3 = 180;
-	app->scene->timeraux4 = 180;
+	app->scene->timeraux4 = 0;
 
 }
 

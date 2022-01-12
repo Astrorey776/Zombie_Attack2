@@ -104,11 +104,14 @@ public:
 
 	float heart_hitboxes[8] = { 200,645,20,18,
 								5650,915,20,18};
+	float clock_hitboxes[8] = {3100,905,38,45,
+								7410,500,38,45};
 
 	bool people_aux = true;
 	bool people_aux2 = true;
 	bool people_aux3 = true;
 	int people_aux_int;
+	int clock_aux_int;
 	bool stop = false;
 	bool shot_state = false;
 	float shotx = enemy2x;
@@ -119,8 +122,9 @@ public:
 	float sliderAux_;
 	float sliderAux2;
 
-	uint score = 000000;
+	int score = 000000;
 	int time = 000;
+	int scoreaux;
 	SDL_Rect nums[10];
 	SDL_Texture* font;
 
@@ -131,6 +135,14 @@ public:
 	float timeraux3 = 180;
 	float timeraux4 = 180;
 	int t = 0;
+
+	bool clock_ = true;
+	bool clock2_ = true;
+
+	bool end = false;
+	bool end2 = false;
+
+	int i = 0;
 
 	void Font();
 
@@ -196,6 +208,8 @@ private:
 
 	SDL_Texture* bullet1;
 	SDL_Texture* clock;
+	SDL_Texture* clock2;
+	SDL_Texture* seconds;
 
 	uint eat = 1;
 	uint click = 3;

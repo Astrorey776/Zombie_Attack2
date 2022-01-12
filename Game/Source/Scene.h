@@ -126,8 +126,10 @@ public:
 
 	float timer;
 	bool timeraux = false;
+	bool timeraux_ = false;
 	float timeraux2;
-	float timeraux3;
+	float timeraux3 = 180;
+	float timeraux4 = 180;
 	int t = 0;
 
 	void Font();

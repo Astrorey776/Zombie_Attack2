@@ -28,6 +28,8 @@ While on God Mode:
   * F5: Save position
   * F6: Load position
   * F10: Activate/disable God Mode
+  * 1: Substract 10 seconds
+  * 2: Add 10 seconds
   
 ## GAME DESCRIPTION:
   

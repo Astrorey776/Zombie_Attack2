@@ -99,6 +99,7 @@ bool Scene::Start()
 	hold = app->audio->LoadFx("Assets/audio/fx/hold.wav");
 
 	font = app->tex->Load("Assets/textures/nums_score.png");
+	clock = app->tex->Load("Assets/textures/clock.png");
 
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -619,6 +620,9 @@ bool Scene::Update(float dt)
 	if (playerx >= 9500) {
 		initial_screen = 0;
 		app->render->DrawTexture(pantalla2, playerx - 1200, 400, NULL);
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+				return 0;
+		}
 		enemy1_state = false;
 		enemy2_state = false;
 		// cambiar la imatge a la d victoria
@@ -636,7 +640,7 @@ bool Scene::Update(float dt)
 		enemy2_state = false;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && menuDisplay == false && pauseDisplay == false && vidas > 0 && initial_screen != 0) {
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && menuDisplay == false && pauseDisplay == false && vidas > 0 && initial_screen != 0 && playerx < 8400) {
 		menuDisplay = true;
 		pauseDisplay = true;
 
@@ -655,7 +659,8 @@ bool Scene::Update(float dt)
 	SDL_Rect rect4 = { playerx + 410,790,205,45 };
 	SDL_Rect rect5 = { playerx + 410,845,205,45 };
 
-	if (pauseDisplay == true) {
+	if (pauseDisplay == true && playerx < 8400) {
+		timeraux = false;
 		app->render->DrawTexture(pause, playerx + 250, 500);
 		for (int i = 0; i < 20; i += 4) {
 			if ((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i + 2]) && y >= menuCoords[i + 1] - 400 && y <= menuCoords[i + 3] + menuCoords[i + 1] - 400) {
@@ -722,6 +727,7 @@ bool Scene::Update(float dt)
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
 						menuDisplay = false;
+						timeraux = true;
 					}
 				}
 				if (i == 4 && menuCount == 1 && credit == false && settings == false) {
@@ -863,7 +869,26 @@ bool Scene::Update(float dt)
 		}
 		PrintFont(playerx + 450, 975, score);
 	}
+	timer = SDL_GetTicks() / 1000;
+	if (timeraux == false) {
+		timeraux2 = timer;
+		timer = timer - timer;
+		
+	}
 
+	if (timeraux == true && playerx < 8400 && app->map->death == false && playerx < 9500) {
+		time = 180 - (timer - timeraux2);
+		PrintFont2(playerx + 450, 1000, time);
+	}
+	if (initial_screen >= 1 && playerx < 8400 && app->map->death == false && playerx < 9500) {
+		app->render->DrawTexture(clock, playerx + 400, 995);
+	}
+	if (playerx >= 8400 && app->map->death == false && playerx < 9500) {
+		time = 180 - (timer - timeraux2);
+		PrintFont2(8850, 1000, time);
+		app->render->DrawTexture(clock,8800, 995);
+	}
+	
 	gameLoop();
 	return true;
 }
@@ -919,6 +944,18 @@ void Scene::PrintFont(int x, int y, uint score_) {
 
 	int score_temp = score_;
 	for (int i = 8; i >= 0; i--) {
+		int temp = score_temp % 10;
+		app->render->DrawTexture(font, i * 22 + x, y, &nums[temp]);
+		score_temp = score_temp / 10;
+	}
+
+
+}
+
+void Scene::PrintFont2(int x, int y, uint score_) {
+
+	int score_temp = score_;
+	for (int i = 2; i >= 0; i--) {
 		int temp = score_temp % 10;
 		app->render->DrawTexture(font, i * 22 + x, y, &nums[temp]);
 		score_temp = score_temp / 10;

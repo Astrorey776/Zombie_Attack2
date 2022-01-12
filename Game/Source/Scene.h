@@ -120,12 +120,20 @@ public:
 	float sliderAux2;
 
 	uint score = 000000;
+	uint time = 000;
 	SDL_Rect nums[10];
 	SDL_Texture* font;
+
+	float timer;
+	bool timeraux = false;
+	float timeraux2;
+	float timeraux3;
+	int t = 0;
 
 	void Font();
 
 	void PrintFont(int x, int y, uint score_);
+	void PrintFont2(int x, int y, uint score_);
 
 	void Reset();
 
@@ -185,6 +193,7 @@ private:
 	SDL_Texture* checkpoint2;
 
 	SDL_Texture* bullet1;
+	SDL_Texture* clock;
 
 	uint eat = 1;
 	uint click = 3;

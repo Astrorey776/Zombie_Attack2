@@ -208,11 +208,13 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (God_Mode == 1) {
-
+			timeraux = true;
 			gravity = -0.5;
 			God_Mode = 0;
 		}
 		else if (God_Mode == 0) {
+			timeraux = false;
+			timeraux3 = time;
 			God_Mode = 1;
 			vely = 0;
 			gravity = 0;
@@ -631,7 +633,10 @@ bool Scene::Update(float dt)
 	if (vidas <= 0 && God_Mode == 0) {
 		app->map->death = true;
 	}
-
+	
+	if (time < 0) {
+		app->map->death = true;
+	}
 	if (app->map->death == true) {
 		app->render->DrawTexture(app->scene->pantalla3, app->scene->playerx -100, 400, NULL);
 		velx = 0;
@@ -856,7 +861,7 @@ bool Scene::Update(float dt)
 		}
 
 	}
-
+	
 	Font();
 
 	if (initial_screen >= 1 && app->map->death == false  && playerx < 8400) {
@@ -876,25 +881,25 @@ bool Scene::Update(float dt)
 
 	timer = SDL_GetTicks() / 1000;
 
-	if (timeraux == false ) {
+	if (timeraux == false) {
 		timeraux2 = timer;
 		timer = timer - timer;
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		t += 10;
+	}
 	if (timeraux == true && playerx < 8400 && app->map->death == false && playerx < 9500) {
-
-		time =  timeraux3 - (timer - timeraux2);
+		time =  timeraux3 - (timer - timeraux2) - t;
 		PrintFont2(playerx + 450, 1000, time);
 	}
 	if (initial_screen >= 1 && playerx < 8400 && app->map->death == false && playerx < 9500) {
 		app->render->DrawTexture(clock, playerx + 400, 995);
 	}
 	if (playerx >= 8400 && app->map->death == false && playerx < 9500) {
-		time = 180 - (timer - timeraux2);
+		time = timeraux3 - (timer - timeraux2);
 		PrintFont2(8850, 1000, time);
 		app->render->DrawTexture(clock,8800, 995);
 	}
-	
 	gameLoop();
 	return true;
 }
@@ -954,7 +959,6 @@ void Scene::PrintFont(int x, int y, uint score_) {
 		app->render->DrawTexture(font, i * 22 + x, y, &nums[temp]);
 		score_temp = score_temp / 10;
 	}
-
 
 }
 
@@ -1054,6 +1058,14 @@ void Scene :: Reset() {
 	app->map->klk_;
 
 	app->scene->score = 500;
+	app->scene->time = 000;
+
+	app->scene->timer;
+	app->scene->timeraux = false;
+	app->scene->timeraux_ = false;
+	app->scene->timeraux2;
+	app->scene->timeraux3 = 180;
+	app->scene->timeraux4 = 180;
 
 }
 

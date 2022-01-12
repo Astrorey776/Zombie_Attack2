@@ -120,7 +120,7 @@ public:
 	float sliderAux2;
 
 	uint score = 000000;
-	uint time = 000;
+	int time = 000;
 	SDL_Rect nums[10];
 	SDL_Texture* font;
 

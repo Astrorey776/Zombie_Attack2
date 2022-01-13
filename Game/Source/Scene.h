@@ -144,6 +144,9 @@ public:
 
 	int i = 0;
 
+	float musica;
+
+
 	void Font();
 
 	void PrintFont(int x, int y, uint score_);
@@ -214,7 +217,7 @@ private:
 	uint eat = 1;
 	uint click = 3;
 	uint hold = 2;
-
+	uint music = 4;
 
 
 	float _fps;

@@ -11,6 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include <iostream>
+#include <SDL_mixer/include/SDL_mixer.h>
 
 Scene::Scene() : Module(), _maxFPS(60.0f)
 {
@@ -102,8 +103,10 @@ bool Scene::Start()
 	clock2 = app->tex->Load("Assets/textures/clock2.png");
 	seconds = app->tex->Load("Assets/textures/10_seconds.png");
 
-	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+
+	Mix_Volume(-1, 0);
+
 	return true;
 }
 
@@ -366,7 +369,7 @@ bool Scene::Update(float dt)
 			clock_aux_int = i+4;
 		}
 	}
-
+	
 	for (int i = people_aux_int; i < 12; i += 4) {//colisions amb les persones que pots matar
 		if (playerx > people_hitboxes[i]- people_hitboxes[i + 2] && playerx < people_hitboxes[i] + people_hitboxes[i + 2] && playery > people_hitboxes[i+1] && playery < people_hitboxes[i + 1] + people_hitboxes[i + 3] && app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 			if (i == 0) {
@@ -779,7 +782,7 @@ bool Scene::Update(float dt)
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
 				//app->audio->PlayFx(hold);
 				if (i == 0 && credit == false && settings == false) {
-					app->render->DrawRectangle(rect1, 0, 250, 0);
+					app->render->DrawRectangle(rect1, 0, 200,0);
 					
 					if (app->input->GetMouseButtonDown(1)) {
 						app->audio->PlayFx(click);
@@ -876,6 +879,10 @@ bool Scene::Update(float dt)
 					x = 475;
 				}
 				sliderAux2 = x - 450 - 25;
+
+				musica = 925 / (926-x);
+
+				Mix_Volume(-1, musica);
 
 			}
 		}
@@ -1085,6 +1092,7 @@ void Scene :: Reset() {
 	app->scene->people_aux2 = true;
 	app->scene->people_aux3 = true;
 	app->scene->people_aux_int = 0;
+	app->scene->clock_aux_int = NULL;
 	app->scene->stop = false;
 	app->scene->shot_state = false;
 	app->scene->shotx = enemy2x;
@@ -1107,13 +1115,22 @@ void Scene :: Reset() {
 
 	app->scene->score = 0;
 	app->scene->time = 000;
+	app->scene->scoreaux = 0;
 
 	app->scene->timer;
 	app->scene->timeraux = false;
 	app->scene->timeraux_ = false;
 	app->scene->timeraux2;
 	app->scene->timeraux3 = 180;
-	app->scene->timeraux4 = 0;
+	app->scene->timeraux4 = 180;
+
+	app->scene->clock_ = true;
+	app->scene->clock2_ = true;
+
+	app->scene->end = false;
+	app->scene->end2 = false;
+
+	app->scene->i = 0;
 
 }
 
@@ -1147,6 +1164,7 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 
 	return true;
 }
+
 
 void Scene::gameLoop() {
 

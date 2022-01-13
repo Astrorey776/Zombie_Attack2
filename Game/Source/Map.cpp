@@ -332,6 +332,7 @@ void Map::Draw()
 							}
 							app->scene->currentTicks_hit = 1;
 							app->scene->vidas -= 1;
+
 							//death = true;
 							
 							//app->render->DrawCircle(200, 100, 50, 0, 255, 0);

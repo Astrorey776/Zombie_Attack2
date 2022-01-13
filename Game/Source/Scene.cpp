@@ -97,6 +97,9 @@ bool Scene::Start()
 	eat = app->audio->LoadFx("Assets/audio/fx/eat.wav");
 	click = app->audio->LoadFx("Assets/audio/fx/click.wav");
 	hold = app->audio->LoadFx("Assets/audio/fx/hold.wav");
+	jump = app->audio->LoadFx("Assets/audio/fx/jump.wav");
+	damage = app->audio->LoadFx("Assets/audio/fx/damage.wav");
+	explosion = app->audio->LoadFx("Assets/audio/fx/explosion.wav");
 
 	font = app->tex->Load("Assets/textures/nums_score.png");
 	clock = app->tex->Load("Assets/textures/clock.png");
@@ -359,11 +362,13 @@ bool Scene::Update(float dt)
 			
 			if (i == 0 && clock_ == true) {
 				t -= 10;
+				app->audio->PlayFx(sound);
 				app->render->DrawTexture(seconds, playerx + 550,1000);
 				clock_ = false;
 			}
 			if (i == 4 && clock2_ == true) {
 				t -= 10;
+				app->audio->PlayFx(sound);
 				app->render->DrawTexture(seconds, playerx + 550, 1000);
 				clock2_ = false;
 			}
@@ -425,6 +430,8 @@ bool Scene::Update(float dt)
 			playerx -= 40;
 			app->render->camera.x += 40;
 			app->scene->vidas -= 1;
+			app->audio->PlayFx(damage);
+
 			score -= 100;
 		}
 
@@ -432,6 +439,8 @@ bool Scene::Update(float dt)
 			playerx += 40;
 			app->render->camera.x -= 40;
 			app->scene->vidas -= 1;
+			app->audio->PlayFx(damage);
+
 			score -= 100;
 		}
 
@@ -441,6 +450,7 @@ bool Scene::Update(float dt)
 
 	if (playerx + 50 > enemy1x && playerx < enemy1x + 44 && playery > enemy1y -10 && playery < enemy1y && enemy1_state == true && app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT && menuDisplay == false) {//Matar enemic1
 		enemy1_state = false;
+		app->audio->PlayFx(eat);
 		score += 500;
 		app->render->DrawTexture(blood, enemy1x +10, enemy1y, sangre);
 	}
@@ -498,6 +508,7 @@ bool Scene::Update(float dt)
 	if (playerx + 50 > enemy2x && playerx < enemy2x + 145 && playery>enemy2y + 57 && playery < enemy2y + 67 && God_Mode == 0 && enemy2_state == true && activate2 == true && jumping == true && menuDisplay == false) {
 		enemy2_state = false;
 		helicopter = true;
+		app->audio->PlayFx(explosion);
 		score += 1000;
 	}
 	if (enemy2_state == true && activate2 == true) {//enemy2 movement
@@ -534,12 +545,15 @@ bool Scene::Update(float dt)
 				playerx -= 40;
 				app->render->camera.x += 40;
 				app->scene->vidas -= 1;
+				app->audio->PlayFx(damage);
 			}
 
 			if (playerx > enemy2x) {
 				playerx += 40;
 				app->render->camera.x -= 40;
 				app->scene->vidas -= 1;
+				app->audio->PlayFx(damage);
+
 			}
 
 			app->scene->currentTicks_hit = 1;
@@ -621,6 +635,7 @@ bool Scene::Update(float dt)
 	app->map->colisionsy = false;
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping==false && God_Mode == 0 && menuDisplay == false) {
 		app->map->colisionsy = false;
+		app->audio->PlayFx(jump);
 		vely = -10;
 		jumping = true;
 	}
@@ -722,13 +737,15 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(pause, playerx + 250, 500);
 		for (int i = 0; i < 20; i += 4) {
 			if ((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i + 2]) && y >= menuCoords[i + 1] - 400 && y <= menuCoords[i + 3] + menuCoords[i + 1] - 400) {
-				//app->audio->PlayFx(hold);
-
+				
+				
+				
 				if (i == 0 && credit == false) {	
 					app->render->DrawRectangle(rect1, 0, 250, 0);
-					
 					if (app->input->GetMouseButtonDown(1)) {
 						pauseDisplay = false;
+						app->audio->PlayFx(hold);
+
 						timeraux = true;
 						
 					}
@@ -737,14 +754,15 @@ bool Scene::Update(float dt)
 				if (i == 4 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect2, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
+						app->audio->PlayFx(hold);
+
 						Reset();
 					}
 				}
 				if (i == 8 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect3, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
+						app->audio->PlayFx(hold);
 						settings = true;
 					}
 				}
@@ -781,12 +799,13 @@ bool Scene::Update(float dt)
 
 		for (int i = 0; i < 20; i += 4) {
 			if((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i+2]) && y >= menuCoords[i+1]-400 && y<=menuCoords[i+3] + menuCoords[i+1]-400){
-				//app->audio->PlayFx(hold);
+				
+				
 				if (i == 0 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect1, 0, 200,0);
 					
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
+						app->audio->PlayFx(hold);
 						menuDisplay = false;
 						timeraux = true;
 					}
@@ -794,7 +813,7 @@ bool Scene::Update(float dt)
 				if (i == 4 && menuCount == 1 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect2, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
+						app->audio->PlayFx(hold);
 						app->LoadGameRequest();
 						menuDisplay = false;
 					}
@@ -806,14 +825,14 @@ bool Scene::Update(float dt)
 				if (i == 8 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect3, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
+						app->audio->PlayFx(hold);
 						settings = true;
 					}
 				}
 				if (i == 12) {
 					app->render->DrawRectangle(rect4, 0, 250, 0);
 					if (app->input->GetMouseButtonDown(1)) {
-						app->audio->PlayFx(click);
+						app->audio->PlayFx(hold);
 						credit = true;
 					}
 
@@ -839,7 +858,7 @@ bool Scene::Update(float dt)
 		if (x >= 195 && x <= 225 && y >= 140 && y <= 170) {
 			app->render->DrawRectangle(rect6, 250, 0, 0);
 			if (app->input->GetMouseButtonDown(1)) {
-				app->audio->PlayFx(click);
+				app->audio->PlayFx(hold);
 				credit = false;
 			}
 		}
@@ -855,7 +874,7 @@ bool Scene::Update(float dt)
 		if (x >= 195 && x <= 225 && y >= 140 && y <= 170) {
 			app->render->DrawRectangle(rect6, 250, 0, 0);
 			if (app->input->GetMouseButtonDown(1)) {
-				app->audio->PlayFx(click);
+				app->audio->PlayFx(hold);
 				settings = false;
 			}
 		}

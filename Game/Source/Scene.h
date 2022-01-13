@@ -36,8 +36,8 @@ public:
 	bool menuDisplay = true;
 	bool pauseDisplay = false;
 	int menuCount;
-	bool credit;
-	bool settings;
+	bool credit = false;
+	bool settings = false;
 
 	bool tick1 = false;
 	bool tick2 = false;
@@ -215,9 +215,13 @@ private:
 	SDL_Texture* clock2;
 	SDL_Texture* seconds;
 
-	uint eat = 1;
-	uint click = 3;
-	uint hold = 2;
+	uint eat;
+	uint click;
+	uint hold;
+	uint jump;
+	uint damage;
+	uint explosion;
+	uint sound;
 	uint music = 4;
 
 

@@ -103,9 +103,10 @@ bool Scene::Start()
 	clock2 = app->tex->Load("Assets/textures/clock2.png");
 	seconds = app->tex->Load("Assets/textures/10_seconds.png");
 
-	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
 	Mix_Volume(-1, 0);
+	Mix_VolumeMusic(0);
 
 	return true;
 }
@@ -860,6 +861,7 @@ bool Scene::Update(float dt)
 		}
 		if (x >= sliderAux + 450 && x <= sliderAux + 500 && y >= 275 && y <= 325) {
 			if (app->input->GetMouseButtonDown(1)) {
+				
 				if (x > 925) {
 					x = 925;
 				}
@@ -867,7 +869,12 @@ bool Scene::Update(float dt)
 					x = 475;
 				}
 				sliderAux = x - 450 - 25;
-				
+				musica = 925 / (926 - x);
+
+				Mix_VolumeMusic(musica);
+				if (sliderAux + 500 <= 500) {
+					Mix_VolumeMusic(0);
+				}
 			}
 		}
 		if (x >= sliderAux2 + 450 && x <= sliderAux2 + 500 && y >= 345 && y <= 395) {
@@ -880,9 +887,12 @@ bool Scene::Update(float dt)
 				}
 				sliderAux2 = x - 450 - 25;
 
-				musica = 925 / (926-x);
+				fx = 925 / (926-x);
 
-				Mix_Volume(-1, musica);
+				Mix_Volume(-1, fx);
+				if (sliderAux2 + 500 <= 500) {
+					Mix_Volume(-1, 0);
+				}
 
 			}
 		}

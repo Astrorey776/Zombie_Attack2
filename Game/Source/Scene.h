@@ -145,6 +145,7 @@ public:
 	int i = 0;
 
 	float musica;
+	float fx;
 
 
 	void Font();

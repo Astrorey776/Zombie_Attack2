@@ -136,6 +136,8 @@ public:
 	float timeraux4 = 180;
 	int t = 0;
 
+	bool continueAble;
+
 	bool clock_ = true;
 	bool clock2_ = true;
 
@@ -221,7 +223,10 @@ private:
 	uint jump;
 	uint damage;
 	uint explosion;
+	uint hover;
 	uint sound;
+	uint slurp;
+	uint check;
 	uint music = 4;
 
 

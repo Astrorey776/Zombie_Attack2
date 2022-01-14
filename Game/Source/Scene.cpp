@@ -104,6 +104,8 @@ bool Scene::Start()
 	sound = app->audio->LoadFx("Assets/audio/fx/sound.wav");
 	slurp = app->audio->LoadFx("Assets/audio/fx/slurp.wav");
 	check = app->audio->LoadFx("Assets/audio/fx/check.ogg");
+	win = app->audio->LoadFx("Assets/audio/fx/win.wav");
+	lose = app->audio->LoadFx("Assets/audio/fx/lose.wav");
 
 	font = app->tex->Load("Assets/textures/nums_score.png");
 	clock = app->tex->Load("Assets/textures/clock.png");
@@ -682,6 +684,7 @@ bool Scene::Update(float dt)
 		initial_screen = 0;
 		end2 = true;
 		app->render->DrawTexture(pantalla2, playerx - 1200, 400, NULL);
+		app->audio->PlayFx(win, 10);
 		if (end == false) {
 
 			timeraux4 = time;
@@ -701,12 +704,16 @@ bool Scene::Update(float dt)
 		// cambiar la imatge a la d victoria
 	}
 
-	if (vidas <= 0 && God_Mode == 0) {
+	if (vidas <= 0 && God_Mode == 0 && loseCount == false) {
 		app->map->death = true;
+		app->audio->PlayFx(lose);
+		loseCount = true;
 	}
 	
-	if (time < 0) {
+	if (time < 0 && loseCount == false) {
 		app->map->death = true;
+		app->audio->PlayFx(lose);
+		loseCount = true;
 	}
 	if (app->map->death == true) {
 		app->render->DrawTexture(app->scene->pantalla3, app->scene->playerx -100, 400, NULL);
@@ -714,6 +721,7 @@ bool Scene::Update(float dt)
 		vely = 0;
 		enemy1_state = false;
 		enemy2_state = false;
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && menuDisplay == false && pauseDisplay == false && vidas > 0 && initial_screen != 0 && playerx < 8400) {
@@ -746,7 +754,7 @@ bool Scene::Update(float dt)
 		for (int i = 0; i < 20; i += 4) {
 			if ((x >= menuCoords[i] && x <= menuCoords[i] + menuCoords[i + 2]) && y >= menuCoords[i + 1] - 400 && y <= menuCoords[i + 3] + menuCoords[i + 1] - 400) {
 				
-				if (i == 0 && credit == false) {	
+				if (i == 0 && credit == false && settings == false) {	
 					app->render->DrawRectangle(rect1, 0, 250, 0);
 					app->audio->PlayFx(hover);
 					if (app->input->GetMouseButtonDown(1)) {
@@ -841,7 +849,7 @@ bool Scene::Update(float dt)
 						settings = true;
 					}
 				}
-				if (i == 12) {
+				if (i == 12 && credit == false && settings == false) {
 					app->render->DrawRectangle(rect4, 0, 250, 0);
 					app->audio->PlayFx(hover);
 					if (app->input->GetMouseButtonDown(1)) {
@@ -1175,6 +1183,9 @@ void Scene :: Reset() {
 	app->scene->end2 = false;
 
 	app->scene->i = 0;
+
+	app->scene->loseCount = false;
+
 
 }
 

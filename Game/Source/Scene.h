@@ -146,6 +146,8 @@ public:
 
 	int i = 0;
 
+	bool loseCount = false;
+
 	float musica;
 	float fx;
 
@@ -227,6 +229,8 @@ private:
 	uint sound;
 	uint slurp;
 	uint check;
+	uint win;
+	uint lose;
 	uint music = 4;
 
 

@@ -112,7 +112,7 @@ bool Scene::Start()
 	clock2 = app->tex->Load("Assets/textures/clock2.png");
 	seconds = app->tex->Load("Assets/textures/10_seconds.png");
 
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/audio/music/music.mp3");
 
 	Mix_Volume(-1, 0);
 	Mix_VolumeMusic(0);

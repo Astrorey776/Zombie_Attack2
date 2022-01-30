@@ -62,6 +62,21 @@ The program has "FPS limiter", "Frame Counter" and the "Vsync" is on.
 * When killing anything on the map, a dead version of it will appear on the right top of the screen to be able to measure the amount of destruction and death.
 * F1 now shows a lot more of colliders
 
+ #Latest improvements
+* Main menu added (Play button, continue, settings, credits, back to title, exit)
+* Settings buttons:
+  * Slider bar to adjust music
+  * Slider bar to adjust SFX
+  * Fullscreen button
+  * V-Sync button
+* On-screen level tips on controls
+* Lives can now be collected as power-ups
+* Indicator of lives added
+* New SFX audio and music
+* Countdown timer
+* Timer power-up
+* Score counter
+
 ## DEVELOPMENT PROCESS II:
 
 The main issues durning the development of the second assignement have been with files rather than with the code, the Optick program difficulted working on the project some days, the pathfing files also slowed down the coding rithm so we skipped the taught pathfinding and developed an alternative enemy movement based on the player coordinates (screen).
